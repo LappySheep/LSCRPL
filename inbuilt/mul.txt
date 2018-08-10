@@ -1,0 +1,67 @@
+Function = mul
+
+Format:
+
+a b mul
+
+Purpose:
+
+(Little Endian) a*b
+(Big Endian) b*a
+
+Pops result on to the stack
+
+Examples:
+(Little Endian)
+
+3 4 mul 2 1 mul mul
+12 2 1 mul mul
+24 1 mul
+24
+
+(Big Endian)
+
+3 4 mul 2 1 mul mul
+12 2 1 mul mul
+12 2 mul
+24 mul
+
+
+If the mul function is used with arrays...
+
+1 2 3 4 5 5 arr{a}
+
+If the array is multiplied by an integer such as:
+
+#little endian
+arr{a} 5 mul 1 arr{a}
+#then the array itself becomes 5 times larger, and so does the size.
+arr{a} !out
+>> 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+
+If the array is multiplied by a float, then the array itself becomes x times larger, and then the decimal point value is converted
+to a percentage that is rounded down to an appropriate fraction before adding itself as a multiple of the original array to its new
+state:
+
+arr{a} 5.999999999999999 mul 1 arr{a}
+arr{a} !out
+>> 1 2 3 4 5 1 2 3  5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5 1 2 3 4 #5.9999... is rounded to 5.8 as there are 5 values, and .8 means 4 values are appended.
+
+If a number is multiplied by an array, the number is multiplied by the first value of the array and popped to the stack.
+
+2 4 6 8 10 5 arr{a}
+10 arr{a} mul
+#outputs 20
+
+If a float is multiplied by an array, the float is multiplied by the first value of the array and popped to the stack.
+
+2 4 6 8 10 5 arr{a}
+10.5 arr{a} mul
+#outputs 21
+
+If an array is multiplied by an array, the first value of both arrays are multiplied and popped to the stack.
+
+2 3 4 5 6 5 arr{a}
+2 4 6 8 10 5 arr{b}
+arr{a} arr{b} mul !out
+>> 4
