@@ -24,7 +24,7 @@ Examples:
 3 4 sub 2 1 sub sub
 -1 2 1 sub sub
 -1 1 sub
-0
+-2
 
 The sub function cannot be used with arrays unless (see below) you want an odd outcome. See the txt file on arrays to see how to remove items from arrays.
 
