@@ -1,0 +1,31 @@
+Function = sub
+
+Format:
+
+a b sub
+
+Purpose:
+
+(Little Endian) a-b
+(Big Endian) b-a
+
+Pops result on to the stack
+
+Examples:
+(Little Endian)
+
+3 4 sub 2 1 sub sub
+-1 2 1 sub sub
+-3 1 sub
+-4
+
+(Big Endian)
+
+3 4 sub 2 1 sub sub
+-1 2 1 sub sub
+-1 1 sub
+0
+
+The sub function cannot be used with arrays unless (see below) you want an odd outcome. See the txt file on arrays to see how to remove items from arrays.
+
+If you use the sub function on an array, the value 0 is popped to the stack.
