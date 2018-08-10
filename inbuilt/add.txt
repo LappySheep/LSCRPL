@@ -22,7 +22,6 @@ Examples:
 (Big Endian)
 
 3 4 add 2 1 add add
-
 7 2 1 add add
 7 3 add
 10
