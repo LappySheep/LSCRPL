@@ -15,15 +15,17 @@ def notes():
     a b mul -> out(a*b)
     a b div -> out(a/b)
     a b fdiv -> out(a//b)
+    a b mod -> out(remainder(a/b))
   """)
   time.sleep(0.5)
   main()
 ops = {
-  "add":(lambda a,b:a+b), #adds a and b
-  "sub":(lambda a,b:a-b), #subtracts b from a
-  "mul":(lambda a,b:a*b), #multiplies a by b
-  "div":(lambda a,b:a/b), #divides a by b
-  "fdiv":(lambda a,b:a//b) #floor divides a by b
+  "add":(lambda a,b:a+b),
+  "sub":(lambda a,b:a-b),
+  "mul":(lambda a,b:a*b),
+  "div":(lambda a,b:a/b),
+  "fdiv":(lambda a,b:a//b),
+  "mod":(lambda a,b:a%b)
 }
 
 def lscEval(exp):
@@ -38,7 +40,10 @@ def lscEval(exp):
       #else the answer will be flipped
       arg1=stack.pop()
       #thus arg1 is the first value
-      ans=ops[indi](arg1, arg2)
+      try:
+        ans=ops[indi](arg1) #single operand opcode
+      except:
+        ans=ops[indi](arg1, arg2) #double operand opcode
       #lambda functions above
       stack.append(ans)
       #push result to the stack
@@ -55,7 +60,7 @@ def lscEval(exp):
 def main():
   a=input("<< ")
   possible=["add","sub","mul","div","fdiv",
-  "self",
+  "self","mod",
   "0","1","2","3","4","5","6","7","8","9"]
   #check for possible input
   other=["notes"]
