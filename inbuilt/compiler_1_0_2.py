@@ -19,13 +19,19 @@ def notes():
   """)
   time.sleep(0.5)
   main()
+
+def lsc_abs(a):
+  return abs(int(a))
+
 ops = {
+  #double operand opcodes below:
   "add":(lambda a,b:a+b),
   "sub":(lambda a,b:a-b),
   "mul":(lambda a,b:a*b),
   "div":(lambda a,b:a/b),
   "fdiv":(lambda a,b:a//b),
-  "mod":(lambda a,b:a%b)
+  "mod":(lambda a,b:a%b),
+  "abs":""
 }
 
 def lscEval(exp):
@@ -34,16 +40,28 @@ def lscEval(exp):
 
   for indi in indiv: #each item in the list
     if indi in ops: #check if available
-      arg2=stack.pop()
-      #stack reads closest from the opcode
-      #therefore arg2 comes before arg1
-      #else the answer will be flipped
-      arg1=stack.pop()
-      #thus arg1 is the first value
       try:
-        ans=ops[indi](arg1) #single operand opcode
+        arg2=stack.pop()
+        #stack reads closest from the opcode
+        #therefore arg2 comes before arg1
+        #else the answer will be flipped
       except:
-        ans=ops[indi](arg1, arg2) #double operand opcode
+        pass
+
+      try:
+        arg1=stack.pop()
+        #thus arg1 is the first value
+      except:
+        pass
+
+      #extra checks:
+      if indi=="abs":
+        ans=lsc_abs(arg2) #arg2 is the "first"
+        #result that we have, so abs will sort this
+        #out first.
+
+      else:
+        ans=ops[indi](arg1, arg2)
       #lambda functions above
       stack.append(ans)
       #push result to the stack
@@ -60,7 +78,7 @@ def lscEval(exp):
 def main():
   a=input("<< ")
   possible=["add","sub","mul","div","fdiv",
-  "self","mod",
+  "self","mod","abs",
   "0","1","2","3","4","5","6","7","8","9"]
   #check for possible input
   other=["notes"]
