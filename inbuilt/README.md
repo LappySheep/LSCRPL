@@ -14,6 +14,44 @@ div
 fdiv
 mod
 abs
+eu
+pi
 
 Todo:
 dup - replicates the most recent item on the stack
+
+sin
+
+cos
+
+tas
+
+->store_val
+
+<-load_val
+
+pow
+
+score - independant status holder
+
+--del_val
+
+:load_func
+
+dfs - define function start
+
+dfe - define function end
+
+AddConversationMessage
+
+ShowConversation
+
+ClearConversation
+
+DestroyConversation
+
+ConversationShowing
+
+ShowOpeningConversation
+
+CloseOpeningConversation
