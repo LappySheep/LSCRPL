@@ -13,6 +13,7 @@ mul
 div
 fdiv
 mod
+abs
 
 Todo:
 dup - replicates the most recent item on the stack
