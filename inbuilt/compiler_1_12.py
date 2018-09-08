@@ -30,12 +30,28 @@ def notes():
     (b-root(a))
     a b gpw -> out x where b^x == a
     (log(base b,a) -> power x where x == answer)
+    a sin -> out sin(x) - input == degrees
+    a cos -> out cos(x) - input == degrees
+    a tan -> out tan(x) - input == degrees
+    (tan outputs 0 to the stack if the result is undefined)
   """)
   time.sleep(0.5)
   main()
 
 def lsc_abs(a):
   return abs(int(a))
+
+def lsc_sin(a):
+  return round(math.sin(math.radians(a)),8)
+
+def lsc_cos(a):
+  return round(math.cos(math.radians(a)),8)
+
+def lsc_tan(a):
+  if a==90:
+    return 0
+  else:
+    return round(math.tan(math.radians(a)),8)
 
 ops = {
   #double operand opcodes below:
@@ -56,7 +72,10 @@ ops = {
   "neq":(lambda a,b:1if a!=b else 0),
   "pow":(lambda a,b:a**b),
   "nrt":(lambda a,b:a**(1/b)),#outputs b-th root of a
-  "gpw":(lambda a,b:math.log(a,b))#b^return=a 
+  "gpw":(lambda a,b:math.log(a,b)),#b^return=a
+  "sin":"",
+  "cos":"",
+  "tan":""
 }
 """
 "eq0":(lambda a:1if a==0 else 0),
@@ -102,6 +121,15 @@ def lscEval(exp):
         ans=lsc_abs(arg2) #arg2 is the "first"
         #result that we have, so abs will sort this
         #out first.
+      
+      elif indi=="sin":
+        ans=lsc_sin(arg2)
+      
+      elif indi=="cos":
+        ans=lsc_cos(arg2)
+      
+      elif indi=="tan":
+        ans=lsc_tan(arg2)
 
       else:
         ans=ops[indi](arg1, arg2)
@@ -127,6 +155,7 @@ def main():
   possible=["add","sub","mul","div","fdiv",
   "self","mod","abs","eu","pi","gt","gte",
   "lt","lte","eq","neq","pow","nrt","gpw",
+  "sin","cos","tan",
   "0","1","2","3","4","5","6","7","8","9"]
   #check for possible input
   other=["notes"]
