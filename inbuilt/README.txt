@@ -26,6 +26,8 @@ gpw (get power)
 sin
 cos
 tan
+rup (round up)
+rdw (round down)
 
 
 Todo:
