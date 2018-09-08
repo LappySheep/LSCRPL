@@ -37,6 +37,8 @@ def notes():
     a rup -> returns a rounded up
     a rdw -> returns a rounded down
     (note - at 20 digits it may not round down anymore)
+    a inc -> increments a
+    a dec -> decrements a
   """)
   time.sleep(0.5)
   main()
@@ -86,7 +88,9 @@ ops = {
   "cos":"",
   "tan":"",
   "rup":"",
-  "rdw":""
+  "rdw":"",
+  "inc":"",
+  "dec":""
 }
 """
 "eq0":(lambda a:1if a==0 else 0),
@@ -141,6 +145,12 @@ def lscEval(exp):
       
       elif indi=="rdw":
         ans=lsc_down(arg2)
+      
+      elif indi=="inc":
+        ans=arg2+1
+      
+      elif indi=="dec":
+        ans=arg2-1
 
       else:
         ans=ops[indi](arg1, arg2)
@@ -166,7 +176,8 @@ def main():
   possible=["add","sub","mul","div","fdiv",
   "self","mod","abs","eu","pi","gt","gte",
   "lt","lte","eq","neq","pow","nrt","gpw",
-  "sin","cos","tan","->","rup","rdw"
+  "sin","cos","tan","->","rup","rdw","inc",
+  "dec"
   ]
   #check for possible input
   other=["notes"]
