@@ -34,6 +34,9 @@ def notes():
     a cos -> out cos(x) - input == degrees
     a tan -> out tan(x) - input == degrees
     (tan outputs 0 to the stack if the result is undefined)
+    a rup -> returns a rounded up
+    a rdw -> returns a rounded down
+    (note - at 20 digits it may not round down anymore)
   """)
   time.sleep(0.5)
   main()
@@ -52,6 +55,12 @@ def lsc_tan(a):
     return 0
   else:
     return round(math.tan(math.radians(a)),8)
+
+def lsc_up(a):
+  return math.ceil(a)
+
+def lsc_down(a):
+  return math.floor(a)
 
 ops = {
   #double operand opcodes below:
@@ -75,7 +84,9 @@ ops = {
   "gpw":(lambda a,b:math.log(a,b)),#b^return=a
   "sin":"",
   "cos":"",
-  "tan":""
+  "tan":"",
+  "rup":"",
+  "rdw":""
 }
 """
 "eq0":(lambda a:1if a==0 else 0),
@@ -130,6 +141,12 @@ def lscEval(exp):
       
       elif indi=="tan":
         ans=lsc_tan(arg2)
+      
+      elif indi=="rup":
+        ans=lsc_up(arg2)
+      
+      elif indi=="rdw":
+        ans=lsc_down(arg2)
 
       else:
         ans=ops[indi](arg1, arg2)
@@ -155,7 +172,7 @@ def main():
   possible=["add","sub","mul","div","fdiv",
   "self","mod","abs","eu","pi","gt","gte",
   "lt","lte","eq","neq","pow","nrt","gpw",
-  "sin","cos","tan","->",
+  "sin","cos","tan","->","rup","rdw"
   ]
   #check for possible input
   other=["notes"]
@@ -165,7 +182,7 @@ def main():
   tempbool=False #var used...
   for x in a.split(" "):
     if x not in possible:
-      if x.isdigit()==False:
+      if x.replace(".", "", 1).isdigit()==False:
         tempbool=True #true = not in available opcodes
       else:
         tempbool=False #false = good stuff
