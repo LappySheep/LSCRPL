@@ -23,6 +23,10 @@ neq (not equal to)
 pow (power)
 nrt (n-th root)
 gpw (get power)
+sin
+cos
+tan
+
 
 Todo:
-dup - replicates the most recent item on the stack, sin, cos, tan, ->store_val, <-load_val, pow, score - independant status holder, --del_val, :load_func, dfs - define function start, dfe - define function end, AddConversationMessage, ShowConversation, ClearConversation, DestroyConversation, ConversationShowing, ShowOpeningConversation, CloseOpeningConversation, eq0, neq0
+dup - replicates the most recent item on the stack, ->store_val, <-load_val, pow, score - independant status holder, --del_val, :load_func, dfs - define function start, dfe - define function end, AddConversationMessage, ShowConversation, ClearConversation, DestroyConversation, ConversationShowing, ShowOpeningConversation, CloseOpeningConversation, eq0, neq0
