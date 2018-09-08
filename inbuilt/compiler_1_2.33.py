@@ -39,6 +39,7 @@ def notes():
     (note - at 20 digits it may not round down anymore)
     a inc -> increments a
     a dec -> decrements a
+    a neg -> negates the sign of a (pos->neg, neg->pos)
   """)
   time.sleep(0.5)
   main()
@@ -63,6 +64,9 @@ def lsc_up(a):
 
 def lsc_down(a):
   return math.floor(a)
+
+def lsc_neg(a):
+  return a*-1
 
 ops = {
   #double operand opcodes below:
@@ -90,7 +94,8 @@ ops = {
   "rup":"",
   "rdw":"",
   "inc":"",
-  "dec":""
+  "dec":"",
+  "neg":""
 }
 """
 "eq0":(lambda a:1if a==0 else 0),
@@ -144,6 +149,9 @@ def lscEval(exp):
       elif indi=="rdw":
         ans=lsc_down(arg2)
       
+      elif indi=="neg":
+        ans=lsc_neg(arg2)
+      
       elif indi=="inc":
         ans=arg2+1
       
@@ -173,8 +181,8 @@ def main():
   possible=["add","sub","mul","div","fdiv",
   "self","mod","abs","eu","pi","gt","gte",
   "lt","lte","eq","neq","pow","nrt","gpw",
-  "sin","cos","tan","->","rup","rdw","inc",
-  "dec"
+  "sin","cos","tan","rup","rdw","inc",
+  "dec","neg"
   ]
   #check for possible input
   other=["notes"]
@@ -184,7 +192,7 @@ def main():
   tempbool=False #var used...
   for x in a.split(" "):
     if x not in possible:
-      if x.replace(".", "", 1).isdigit()==False:
+      if x.replace(".","",1).isdigit()==False:
         tempbool=True #true = not in available opcodes
   if tempbool==True:
     print("Error found while compiling. Try again.")
@@ -193,7 +201,11 @@ def main():
     except:
       raise compileError("""Error found while compiling:
       Invalid syntax (Unknown opcode or value?)""")
-  b=lscEval(a)
+  try:
+    b=lscEval(a)
+  except:
+    print("Unable to output result.")
+    raise compileError("""Error found while compiling: Invalid syntax (Could not output result?)""")
   if len(str(b)) > 256:
     raise tooBig("""Error found while compiling:
     Result exceeds 256 characters""")
