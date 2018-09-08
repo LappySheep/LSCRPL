@@ -162,14 +162,13 @@ def lscEval(exp):
         stack.append(float(indi))
         #if integer...
       except:
-        try:
-          stack.append(int(indi))
-          #...or if it's not an integer.
-        except:
-          indiv.remove(indi)
-          #...or if it's neither...?
+        indiv.remove(indi)
+        #...or if it's neither...?
 
-  return stack.pop()
+  try:
+    return stack.pop()
+  except IndexError:
+    return "Invalid state?"
 
 def main():
   a=input("<< ")
@@ -189,8 +188,6 @@ def main():
     if x not in possible:
       if x.replace(".", "", 1).isdigit()==False:
         tempbool=True #true = not in available opcodes
-      else:
-        tempbool=False #false = good stuff
   if tempbool==True:
     print("Error found while compiling. Try again.")
     try:
