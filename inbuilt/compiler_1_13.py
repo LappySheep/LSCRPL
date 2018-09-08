@@ -155,8 +155,8 @@ def main():
   possible=["add","sub","mul","div","fdiv",
   "self","mod","abs","eu","pi","gt","gte",
   "lt","lte","eq","neq","pow","nrt","gpw",
-  "sin","cos","tan",
-  "0","1","2","3","4","5","6","7","8","9"]
+  "sin","cos","tan","->",
+  ]
   #check for possible input
   other=["notes"]
   if a in other:
@@ -165,9 +165,10 @@ def main():
   tempbool=False #var used...
   for x in a.split(" "):
     if x not in possible:
-      tempbool=True #true = not in available opcodes
-    else:
-      tempbool=False #false = good stuff
+      if x.isdigit()==False:
+        tempbool=True #true = not in available opcodes
+      else:
+        tempbool=False #false = good stuff
   if tempbool==True:
     print("Error found while compiling. Try again.")
     try:
