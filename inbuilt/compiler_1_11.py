@@ -1,4 +1,5 @@
 import time
+import math
 
 class compileError(Exception):
   pass
@@ -24,8 +25,11 @@ def notes():
     a b lte -> 1 if a<=b else 0
     a b eq -> 1 if a==b else 0
     a b neq -> 1 if a!=b else 0
-    a eq0 -> 1 if a==0 else 0
-    a neq0 -> 1 if a!=0 else 0
+    a b pow -> out(a^b)
+    a b nrt -> out(a^(1/b)); b-th root of a
+    (b-root(a))
+    a b gpw -> out x where b^x == a
+    (log(base b,a) -> power x where x == answer)
   """)
   time.sleep(0.5)
   main()
@@ -50,6 +54,9 @@ ops = {
   "lte":(lambda a,b:1if a<=b else 0),
   "eq":(lambda a,b:1if a==b else 0),
   "neq":(lambda a,b:1if a!=b else 0),
+  "pow":(lambda a,b:a**b),
+  "nrt":(lambda a,b:a**(1/b)),#outputs b-th root of a
+  "gpw":(lambda a,b:math.log(a,b))#b^return=a 
 }
 """
 "eq0":(lambda a:1if a==0 else 0),
@@ -119,7 +126,7 @@ def main():
   a=input("<< ")
   possible=["add","sub","mul","div","fdiv",
   "self","mod","abs","eu","pi","gt","gte",
-  "lt","lte","eq","neq",
+  "lt","lte","eq","neq","pow","nrt","gpw",
   "0","1","2","3","4","5","6","7","8","9"]
   #check for possible input
   other=["notes"]
