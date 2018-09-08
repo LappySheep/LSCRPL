@@ -18,6 +18,14 @@ def notes():
     a b mod -> out(remainder(a/b))
     eu -> replace item with Euler's number (32 d.p)
     pi -> replace item with pi (32 d.p)
+    a b gt -> 1 if a>b else 0
+    a b gte -> 1 if a>=b else 0
+    a b lt -> 1 if a<b else 0
+    a b lte -> 1 if a<=b else 0
+    a b eq -> 1 if a==b else 0
+    a b neq -> 1 if a!=b else 0
+    a eq0 -> 1 if a==0 else 0
+    a neq0 -> 1 if a!=0 else 0
   """)
   time.sleep(0.5)
   main()
@@ -35,8 +43,18 @@ ops = {
   "mod":(lambda a,b:a%b),
   "abs":"",
   "eu":"",
-  "pi":""
+  "pi":"",
+  "gt":(lambda a,b:1if a>b else 0),
+  "gte":(lambda a,b:1if a>=b else 0),
+  "lt":(lambda a,b:1if a<b else 0),
+  "lte":(lambda a,b:1if a<=b else 0),
+  "eq":(lambda a,b:1if a==b else 0),
+  "neq":(lambda a,b:1if a!=b else 0),
 }
+"""
+"eq0":(lambda a:1if a==0 else 0),
+"neq0":(lambda a:1if a!=0 else 0)
+"""
 
 def lscEval(exp):
   indiv=exp.split() #space-separated values -> list
@@ -88,15 +106,20 @@ def lscEval(exp):
         stack.append(float(indi))
         #if integer...
       except:
-        #...or if it's not an integer.
-        stack.append(int(indi))
+        try:
+          stack.append(int(indi))
+          #...or if it's not an integer.
+        except:
+          indiv.remove(indi)
+          #...or if it's neither...?
 
   return stack.pop()
 
 def main():
   a=input("<< ")
   possible=["add","sub","mul","div","fdiv",
-  "self","mod","abs","eu","pi",
+  "self","mod","abs","eu","pi","gt","gte",
+  "lt","lte","eq","neq",
   "0","1","2","3","4","5","6","7","8","9"]
   #check for possible input
   other=["notes"]
