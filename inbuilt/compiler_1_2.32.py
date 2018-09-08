@@ -101,13 +101,11 @@ def lscEval(exp):
   indiv=exp.split() #space-separated values -> list
   stack=[]
 
-  for item in indiv:
+  for i, item in enumerate(indiv):
     if item=="eu":
-      a=indiv.index(item)
-      indiv[a]=math.e
+      indiv[i]=math.e
     elif item=="pi":
-      a=indiv.index(item)
-      indiv[a]=math.pi
+      indiv[i]=math.pi
 
   for indi in indiv: #each item in the list
     if indi in ops: #check if available
