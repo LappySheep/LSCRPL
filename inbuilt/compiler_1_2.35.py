@@ -95,7 +95,8 @@ ops = {
   "rdw":"",
   "inc":"",
   "dec":"",
-  "neg":""
+  "neg":"",
+  "dup":""
 }
 """
 "eq0":(lambda a:1if a==0 else 0),
@@ -157,11 +158,21 @@ def lscEval(exp):
       
       elif indi=="dec":
         ans=arg2-1
+      
+      elif indi=="dup":
+        ans=arg2
+        secondary=True
 
       else:
         ans=ops[indi](arg1, arg2)
       #lambda functions above
       stack.append(ans)
+      try:
+        if secondary==True:
+          stack.append(ans)
+          secondary=False
+      except:
+        pass
       #push result to the stack
     else:
       try:
@@ -182,12 +193,12 @@ def main():
   "self","mod","abs","eu","pi","gt","gte",
   "lt","lte","eq","neq","pow","nrt","gpw",
   "sin","cos","tan","rup","rdw","inc",
-  "dec","neg"
+  "dec","neg","dup"
   ]
   #check for possible input
   other=["notes"]
-  if a in other:
-    exec("{}()".format(a))
+  if a.strip() in other:
+    exec("{}()".format(a.strip()))
   #check if input is requesting anything different
   tempbool=False #var used...
   for x in a.split():
