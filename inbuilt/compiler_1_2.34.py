@@ -190,7 +190,7 @@ def main():
     exec("{}()".format(a))
   #check if input is requesting anything different
   tempbool=False #var used...
-  for x in a.split(" "):
+  for x in a.split():
     if x not in possible:
       if x.replace(".","",1).isdigit()==False:
         tempbool=True #true = not in available opcodes
