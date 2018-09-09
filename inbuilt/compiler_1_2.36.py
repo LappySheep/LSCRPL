@@ -73,8 +73,8 @@ ops = {
   "add":(lambda a,b:a+b),
   "sub":(lambda a,b:a-b),
   "mul":(lambda a,b:a*b),
-  "div":(lambda a,b:a/b),
-  "fdiv":(lambda a,b:a//b),
+  "div":(lambda a,b:a/b if b!=0 else 0),
+  "fdiv":(lambda a,b:a//b if b!=0 else 0),
   "mod":(lambda a,b:a%b),
   "abs":"",
   "eu":"",
@@ -96,8 +96,10 @@ ops = {
   "inc":"",
   "dec":"",
   "neg":"",
-  "dup":""
+  "dup":"","self":""
 }
+
+other=["notes"]
 """
 "eq0":(lambda a:1if a==0 else 0),
 "neq0":(lambda a:1if a!=0 else 0)
@@ -159,7 +161,7 @@ def lscEval(exp):
       elif indi=="dec":
         ans=arg2-1
       
-      elif indi=="dup":
+      elif indi=="dup" or indi=="self":
         ans=arg2
         secondary=True
 
@@ -187,22 +189,15 @@ def lscEval(exp):
   except IndexError:
     return "Invalid state?"
 
-def main():
-  a=input("<< ")
-  possible=["add","sub","mul","div","fdiv",
-  "self","mod","abs","eu","pi","gt","gte",
-  "lt","lte","eq","neq","pow","nrt","gpw",
-  "sin","cos","tan","rup","rdw","inc",
-  "dec","neg","dup"
-  ]
+
+def checks(a):
   #check for possible input
-  other=["notes"]
   if a.strip() in other:
     exec("{}()".format(a.strip()))
-  #check if input is requesting anything different
+    #check if input is requesting anything different
   tempbool=False #var used...
   for x in a.split():
-    if x not in possible:
+    if x not in ops:
       if x.replace(".","",1).isdigit()==False:
         tempbool=True #true = not in available opcodes
   if tempbool==True:
@@ -220,9 +215,13 @@ def main():
   if len(str(b)) > 256:
     raise tooBig("""Error found while compiling:
     Result exceeds 256 characters""")
-    #prevent any problems that could occur
-    #from having too many characters
-    #(for whatever that could possibly happen)
+  return b
+
+
+def main():
+  a=input("<< ")
+  b=checks(a)
+  
   print(">> "+str(b))
   time.sleep(0.5)
   main()
