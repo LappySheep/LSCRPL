@@ -15,8 +15,11 @@ def notes():
     a b sub -> out(a-b)
     a b mul -> out(a*b)
     a b div -> out(a/b)
+    (if b == 0, out(0) to avoid division by 0)
     a b fdiv -> out(a//b)
+    (if b == 0, out(0) to avoid division by 0)
     a b mod -> out(remainder(a/b))
+    (if b == 0, out(0) to avoid division by 0)
     eu -> replace item with Euler's number (32 d.p)
     pi -> replace item with pi (32 d.p)
     a b gt -> 1 if a>b else 0
@@ -75,7 +78,7 @@ ops = {
   "mul":(lambda a,b:a*b),
   "div":(lambda a,b:a/b if b!=0 else 0),
   "fdiv":(lambda a,b:a//b if b!=0 else 0),
-  "mod":(lambda a,b:a%b),
+  "mod":(lambda a,b:a%b if b!=0 else 0),
   "abs":"",
   "eu":"",
   "pi":"",
