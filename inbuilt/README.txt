@@ -28,7 +28,8 @@ cos
 tan
 rup (round up)
 rdw (round down)
+dup
 
 
 Todo:
-dup - replicates the most recent item on the stack, ->store_val, <-load_val, pow, score - independant status holder, --del_val, :load_func, dfs - define function start, dfe - define function end, AddConversationMessage, ShowConversation, ClearConversation, DestroyConversation, ConversationShowing, ShowOpeningConversation, CloseOpeningConversation, eq0, neq0
+->store_val, <-load_val, pow, score - independant status holder, --del_val, :load_func, dfs - define function start, dfe - define function end, AddConversationMessage, ShowConversation, ClearConversation, DestroyConversation, ConversationShowing, ShowOpeningConversation, CloseOpeningConversation, eq0, neq0
