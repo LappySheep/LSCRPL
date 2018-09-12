@@ -182,7 +182,7 @@ def lscEval(exp):
       #push result to the stack
     else:
       try:
-        stack.append(indi)
+        stack.append(decimal.Decimal(indi))
         #if integer...
       except:
         indiv.remove(indi)
