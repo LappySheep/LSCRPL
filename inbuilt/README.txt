@@ -32,4 +32,42 @@ dup
 
 
 Todo:
-->store_val, <-load_val, pow, score - independant status holder, --del_val, :load_func, dfs - define function start, dfe - define function end, AddConversationMessage, ShowConversation, ClearConversation, DestroyConversation, ConversationShowing, ShowOpeningConversation, CloseOpeningConversation, eq0, neq0
+
+!out
+outputs the current value on the stack
+
+->store_val
+example:
+5 4 add 2 mul ->a
+9 2 mul ->a
+18 ->a
+
+(variable a contains the number 18 now)
+
+<-load_val
+example:
+5 4 add 2 mul ->a
+<-a 5 add
+>> 23
+
+--del_val
+5 4 add 2 mul ->a --a
+<-a
+(invalid opcode; a was removed)
+
+:load_func
+example:
+:active <-a inc
+(while program is active, a is incremented)
+
+dfs - define function start
+example:
+"func" "a" dfs <-a 5 add !out dfe
+(outputs a + 5)
+
+dfe - define function end
+see dfs
+
+eq0 - returns 1 if value equals 0, otherwise returns 0
+
+neq0 - returns 1 if value does not equal 0, otherwise returns 0
