@@ -36,6 +36,7 @@ Todo:
 !out
 outputs the current value on the stack
 
+[
 ->store_val
 example:
 5 4 add 2 mul ->a
@@ -49,6 +50,8 @@ example:
 5 4 add 2 mul ->a
 <-a 5 add
 >> 23
+]
+Planned = Make a section where the interpreter generates files and uses stored data in those as opposed to having it stored in memory
 
 --del_val
 5 4 add 2 mul ->a --a
