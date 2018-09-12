@@ -191,7 +191,7 @@ def lscEval(exp):
   try:
     return stack.pop()
   except IndexError:
-    return "Invalid state?"
+    raise compileError("Invalid state?")
 
 
 def checks(a):
