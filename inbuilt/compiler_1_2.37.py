@@ -1,5 +1,6 @@
 import time
 import math
+import decimal
 
 class compileError(Exception):
   pass
@@ -66,7 +67,7 @@ def lsc_up(a):
   return math.ceil(a)
 
 def lsc_down(a):
-  return math.floor(a)
+  return math.floor(decimal.Decimal(a))
 
 def lsc_neg(a):
   return a*-1
@@ -181,7 +182,7 @@ def lscEval(exp):
       #push result to the stack
     else:
       try:
-        stack.append(float(indi))
+        stack.append(indi)
         #if integer...
       except:
         indiv.remove(indi)
