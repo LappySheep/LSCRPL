@@ -52,19 +52,19 @@ def lsc_abs(a):
   return abs(int(a))
 
 def lsc_sin(a):
-  return round(math.sin(math.radians(a)),8)
+  return round(decimal.Decimal(math.sin(math.radians(a))),8)
 
 def lsc_cos(a):
-  return round(math.cos(math.radians(a)),8)
+  return round(decimal.Decimal(math.cos(math.radians(a))),8)
 
 def lsc_tan(a):
   if a==90:
     return 0
   else:
-    return round(math.tan(math.radians(a)),8)
+    return round(decimal.Decimal(math.tan(math.radians(a))),8)
 
 def lsc_up(a):
-  return math.ceil(a)
+  return math.ceil(decimal.Decimal(a))
 
 def lsc_down(a):
   return math.floor(decimal.Decimal(a))
@@ -91,7 +91,7 @@ ops = {
   "neq":(lambda a,b:1if a!=b else 0),
   "pow":(lambda a,b:a**b),
   "nrt":(lambda a,b:a**(1/b)),#outputs b-th root of a
-  "gpw":(lambda a,b:math.log(a,b)),#b^return=a
+  "gpw":(lambda a,b:decimal.Decimal(math.log(a,b))),#b^return=a
   "sin":"",
   "cos":"",
   "tan":"",
@@ -115,9 +115,9 @@ def lscEval(exp):
 
   for i, item in enumerate(indiv):
     if item=="eu":
-      indiv[i]=math.e
+      indiv[i]=decimal.Decimal(math.e)
     elif item=="pi":
-      indiv[i]=math.pi
+      indiv[i]=decimal.Decimal(math.pi)
 
   for indi in indiv: #each item in the list
     if indi in ops: #check if available
