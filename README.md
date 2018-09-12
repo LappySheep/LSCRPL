@@ -11,4 +11,3 @@ Older challenges made before this date was used with the obsolete version of RPN
 Note - the obsolete version of rpn will slowly be removed while it is transferred to the compiler.
 
 Read README.md in /inbuilt/ for more.
-test
