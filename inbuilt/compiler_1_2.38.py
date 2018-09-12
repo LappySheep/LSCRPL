@@ -202,7 +202,7 @@ def checks(a):
   tempbool=False #var used...
   for x in a.split():
     if x not in ops:
-      if x.replace(".","",1).isdigit()==False:
+      if ((x.replace(".","",1)).replace("-","",1)).isdigit()==False:
         tempbool=True #true = not in available opcodes
   if tempbool==True:
     print("Error found while compiling. Try again.")
