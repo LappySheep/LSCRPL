@@ -35,9 +35,9 @@ bin_ops = {
     "add": (lambda a,b: a+b),
     "sub": (lambda a,b: a-b),
     "mul": (lambda a,b: a*b),
-    "div": (lambda a,b: a/b if b!=0 else 0),
-    "fdiv": (lambda a,b: a//b if b!=0 else 0),
-    "mod": (lambda a,b: a%b if b!=0 else 0),
+    "div": (lambda a,b: a/b if b!=0 else Dec(0)),
+    "fdiv": (lambda a,b: a//b if b!=0 else Dec(0)),
+    "mod": (lambda a,b: a%b if b!=0 else Dec(0)),
     "gt": (lambda a,b: Dec(a>b)),
     "gte": (lambda a,b: Dec(a>=b)),
     "lt": (lambda a,b: Dec(a<b)),
@@ -46,7 +46,7 @@ bin_ops = {
     "neq": (lambda a,b: Dec(a!=b)),
     "pow": (lambda a,b: a**b),
     "nrt": (lambda a,b: a**(1/b)),
-    "gpw": (lambda a,b: Dec(math.log(a,b))), #DEPRECATED
+    "gpw": (lambda a,b: Dec(math.log(a,b))), #deprecated synonym
     "log": (lambda a,b: Dec(math.log(a,b))),
 }
 
@@ -58,7 +58,7 @@ def handle_binop(op, s):
 unary_ops = {
     "sin": (lambda a: round(Dec(math.sin(math.radians(a))), 10)),
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
-    "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10)),
+    "tan": (lambda a: round(Dec(math.tan(math.radians(a) if a != 90 else 0)), 10)),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
