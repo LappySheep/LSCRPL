@@ -98,11 +98,16 @@ def op_dup(s):
     s.append(a)
     s.append(a)
 
+def op_out(s):
+    a = pop_stack(s)
+    print(str(a))
+
 ops = {
     "eu": op_eu,
     "pi": op_pi,
     "dup": op_dup,
     "self": op_dup,
+    "!out": op_out,
 }
 # merge bin_ops into ops
 for k, v in bin_ops.items():
