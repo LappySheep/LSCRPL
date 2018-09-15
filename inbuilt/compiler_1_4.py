@@ -8,6 +8,7 @@ import math
 import decimal
 Dec = decimal.Decimal
 import functools
+import string
 
 try:
     import readline
@@ -24,6 +25,18 @@ class StackTooSmallError(ExecutionError):
 class InvalidOperation(ExecutionError):
     def __str__(self):
         return "Invalid instruction."
+
+class InvalidVarName(ExecutionError):
+    def __init__(self, varname):
+        self.varname = varname
+    def __str__(self):
+        return f"Invalid variable name '{self.varname}'."
+
+class UndefinedVariable(ExecutionError):
+    def __init__(self, varname):
+        self.varname = varname
+    def __str__(self):
+        return f"Variable '{self.varname}' isn't defined."
 
 def pop_stack(stack):
     try:
@@ -46,8 +59,9 @@ bin_ops = {
     "neq": (lambda a,b: Dec(a!=b)),
     "pow": (lambda a,b: a**b),
     "nrt": (lambda a,b: a**(1/b)),
-    "gpw": (lambda a,b: Dec(math.log(a,b))), #deprecated synonym
-    "log": (lambda a,b: Dec(math.log(a,b))),
+    # rounding to 10 places because the log function isn't very accurate
+    "log": (lambda a,b: round(Dec(math.log(a,b))), 10),
+    "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10), # deprecated synonym
 }
 
 def handle_binop(op, s):
@@ -58,13 +72,15 @@ def handle_binop(op, s):
 unary_ops = {
     "sin": (lambda a: round(Dec(math.sin(math.radians(a))), 10)),
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
-    "tan": (lambda a: round(Dec(math.tan(math.radians(a) if a != 90 else 0)), 10)),
+    "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10) if a != 90 else Dec(0)),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
     "dec": (lambda a: a-1),
     "neg": (lambda a: -a),
     "abs": (lambda a: abs(a)),
+    "eq0": (lambda a: Dec(a == 0)),
+    "neq0": (lambda a: Dec(a != 0)),
 }
 
 def handle_unary_op(op, s):
@@ -110,7 +126,7 @@ def is_integer(x):
         return False
     return True
 
-def eval_cmd(inp):
+def eval_cmd(inp, variables):
     tokens = split_input(inp)
     stack = []
     debug_mode = False
@@ -124,6 +140,22 @@ def eval_cmd(inp):
                 stack.append(decimal.Decimal(x))
             elif x in ops:
                 ops[x](stack) # the operator itself handles stack manipulation
+            elif len(x) == 3 and x[0:2] in ("->", "<-", "--"):
+                var_name = x[2]
+                if var_name not in string.ascii_letters:
+                    raise InvalidVarName(var_name)
+                if x[0:2] == "->":
+                    variables[var_name] = pop_stack(stack)
+                elif x[0:2] == "<-":
+                    try:
+                        stack.append(variables[var_name])
+                    except KeyError:
+                        raise UndefinedVariable(var_name)
+                elif x[0:2] == "--":
+                    try:
+                        del variables[var_name]
+                    except KeyError:
+                        raise UndefinedVariable(var_name)
             else:
                 raise InvalidOperation()
         except ExecutionError as e:
@@ -141,13 +173,14 @@ def eval_cmd(inp):
 
 
 def main():
+    variables = {}
     while True:
         try:
             cmd = input(">> ")
         except (EOFError, KeyboardInterrupt):
             print()
             break
-        eval_cmd(cmd)
+        eval_cmd(cmd, variables)
 
 if __name__ == '__main__':
     main()
