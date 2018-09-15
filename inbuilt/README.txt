@@ -34,11 +34,9 @@ dup
 ->[letter] (e.g. ->a) (pop from stack and store to variable)
 <-[letter] (e.g. <-a) (push the value of the varible on the stack)
 --[letter] (e.g. --a) (delete the variable)
+!out (pop a value from the stack and print it)
 
 Todo:
-
-!out
-outputs the current value on the stack
 
 Planned = Make a section where the interpreter generates files and uses stored data in those as opposed to having it stored in memory
 
