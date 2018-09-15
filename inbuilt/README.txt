@@ -20,6 +20,8 @@ lt (less than)
 lte (less than or equal to)
 eq (equal to)
 neq (not equal to)
+eq0 (equal to 0)
+neq0 (not equal to 0)
 pow (power)
 nrt (n-th root)
 gpw (get power)
@@ -29,34 +31,14 @@ tan
 rup (round up)
 rdw (round down)
 dup
-
+->[letter] (e.g. ->a) (pop from stack and store to variable)
+<-[letter] (e.g. <-a) (push the value of the varible on the stack)
+--[letter] (e.g. --a) (delete the variable)
+!out (pop a value from the stack and print it)
 
 Todo:
 
-!out
-outputs the current value on the stack
-
-[
-->store_val
-example:
-5 4 add 2 mul ->a
-9 2 mul ->a
-18 ->a
-
-(variable a contains the number 18 now)
-
-<-load_val
-example:
-5 4 add 2 mul ->a
-<-a 5 add
->> 23
-]
 Planned = Make a section where the interpreter generates files and uses stored data in those as opposed to having it stored in memory
-
---del_val
-5 4 add 2 mul ->a --a
-<-a
-(invalid opcode; a was removed)
 
 :load_func
 example:
@@ -70,7 +52,3 @@ example:
 
 dfe - define function end
 see dfs
-
-eq0 - returns 1 if value equals 0, otherwise returns 0
-
-neq0 - returns 1 if value does not equal 0, otherwise returns 0
