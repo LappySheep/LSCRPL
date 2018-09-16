@@ -35,6 +35,7 @@ dup
 <-[letter] (e.g. <-a) (push the value of the varible on the stack)
 --[letter] (e.g. --a) (delete the variable)
 !out (pop a value from the stack and print it)
+pn1 (n^-1)
 
 Todo:
 
