@@ -81,6 +81,7 @@ unary_ops = {
     "abs": (lambda a: abs(a)),
     "eq0": (lambda a: Dec(a == 0)),
     "neq0": (lambda a: Dec(a != 0)),
+    "pn1": (lambda a: Dec(1/a)),
 }
 
 def handle_unary_op(op, s):
