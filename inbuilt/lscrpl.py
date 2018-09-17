@@ -44,6 +44,17 @@ def pop_stack(stack):
     except IndexError:
         raise StackTooSmallError()
 
+tern_ops = {
+  #"shta": (lambda a,b,c: )
+  # shortest angle; where a is the centre point, and where b and c are two other points - https://imgur.com/a/qhqkEWQ - a,b,c must all be 
+}
+
+def handle_ternop(op, s):
+    c = pop_stack(s)
+    b = pop_stack(s)
+    a = pop_stack(s)
+    s.append(tern_ops[op](a, b, c))
+
 bin_ops = {
     "add": (lambda a,b: a+b),
     "sub": (lambda a,b: a-b),
@@ -62,6 +73,8 @@ bin_ops = {
     # rounding to 10 places because the log function isn't very accurate
     "log": (lambda a,b: round(Dec(math.log(a,b))), 10),
     "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10), # deprecated synonym
+    "max": (lambda a,b: max(a,b)),
+    "min": (lambda a,b: min(a,b)),
 }
 
 def handle_binop(op, s):
@@ -73,6 +86,8 @@ unary_ops = {
     "sin": (lambda a: round(Dec(math.sin(math.radians(a))), 10)),
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
     "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10) if a != 90 else Dec(0)),
+    "acs": (lambda a: round(Dec(math.acos(math.radians(a))))),
+    "asn": (lambda a: round(Dec(math.acos(math.radians(a))))),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
@@ -82,6 +97,8 @@ unary_ops = {
     "eq0": (lambda a: Dec(a == 0)),
     "neq0": (lambda a: Dec(a != 0)),
     "rec": (lambda a: Dec(1/a)),
+    "sqrt": (lambda a: round(Dec(a**Dec(0.5)))),
+    "cbrt": (lambda a: round(Dec(a**Dec(1/3)))),
 }
 
 def handle_unary_op(op, s):
