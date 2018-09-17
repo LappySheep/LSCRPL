@@ -127,6 +127,9 @@ ops = {
     "self": op_dup,
     "!out": op_out,
 }
+# merge tern_ops into ops
+for k, v in tern_ops.items():
+    ops[k] = functools.partial(handle_ternop, k)
 # merge bin_ops into ops
 for k, v in bin_ops.items():
     ops[k] = functools.partial(handle_binop, k)
