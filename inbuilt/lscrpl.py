@@ -2,7 +2,7 @@ __author__ = "randomdude999"
 __copyright__ = "LSC"
 __credits__ = ["randomdude999", "LappySheep"]
 __license__ = "MIT"
-__version__ = "1.5"
+__version__ = "1.4"
 
 import math
 import decimal
@@ -112,8 +112,11 @@ def op_pi(s):
     s.append(round(Dec(math.pi), 10))
 
 def op_inp(s):
-    inp = Dec(input("<(Input)< "))
-    s.append(inp)
+    try:
+      inp = Dec(input("<(Input)< "))
+      s.append(inp)
+    except decimal.InvalidOperation:
+      s.append(0)
 
 def op_dup(s):
     a = pop_stack(s)
@@ -186,6 +189,7 @@ def eval_cmd(inp, variables):
                         del variables[var_name]
                     except KeyError:
                         raise UndefinedVariable(var_name)
+
             else:
                 raise InvalidOperation()
         except ExecutionError as e:
