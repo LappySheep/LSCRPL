@@ -1,7 +1,7 @@
 LSCRPL; LS' Challenges (server) Reverse Polish Language.
 
 A slightly modified version of what is known as "reverse polish"; a stack based interpreter.
-Previously this was pseudocode. As of 07/09/18 22:22, a compiler was created.
+Previously this was pseudocode. As of 07/09/18 22:22, an interpreter was created.
 
 
 Available:
@@ -36,6 +36,7 @@ dup
 --[letter] (e.g. --a) (delete the variable)
 !out (pop a value from the stack and print it)
 pn1 (n^-1)
+!inp (push a value to the stack)
 
 Todo:
 
