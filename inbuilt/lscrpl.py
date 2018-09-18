@@ -2,7 +2,7 @@ __author__ = "randomdude999"
 __copyright__ = "LSC"
 __credits__ = ["randomdude999", "LappySheep"]
 __license__ = "MIT"
-__version__ = "1.4"
+__version__ = "1.5"
 
 import math
 import decimal
@@ -112,8 +112,8 @@ def op_pi(s):
     s.append(round(Dec(math.pi), 10))
 
 def op_inp(s):
-    inp = int(input("<(Input)< "))
-    s.append(Dec(inp))
+    inp = Dec(input("<(Input)< "))
+    s.append(inp)
 
 def op_dup(s):
     a = pop_stack(s)
@@ -138,7 +138,6 @@ for k, v in tern_ops.items():
 # merge bin_ops into ops
 for k, v in bin_ops.items():
     ops[k] = functools.partial(handle_binop, k)
-
 # merge unary_ops into ops
 for k, v in unary_ops.items():
     ops[k] = functools.partial(handle_unary_op, k)
