@@ -111,6 +111,10 @@ def op_eu(s):
 def op_pi(s):
     s.append(round(Dec(math.pi), 10))
 
+def op_inp(s):
+    inp = int(input("<(Input)< "))
+    s.append(Dec(inp))
+
 def op_dup(s):
     a = pop_stack(s)
     s.append(a)
@@ -123,6 +127,7 @@ def op_out(s):
 ops = {
     "eu": op_eu,
     "pi": op_pi,
+    "!inp": op_inp,
     "dup": op_dup,
     "self": op_dup,
     "!out": op_out,
