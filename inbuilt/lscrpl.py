@@ -2,7 +2,7 @@ __author__ = "randomdude999"
 __copyright__ = "LSC"
 __credits__ = ["randomdude999", "LappySheep"]
 __license__ = "MIT"
-__version__ = "1.5"
+__version__ = "1.6"
 
 import math
 import decimal
@@ -169,7 +169,6 @@ ops = {
     "self": op_dup,
     "!out": op_out,
     "fmc": op_fmc,
-    "fmk": op_fmk,
     "flt": op_flt,
     "flc": op_flc,
 }
