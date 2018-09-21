@@ -133,7 +133,20 @@ def op_fmc(s):
     loop=True
     while loop==True:
       b=input("<Code< ")
-      if (len(b)==1)and(b=="q"):
+      if b=="q":
+        loop=False
+        f.close()
+      else:
+        f.write(f"{b}\n")
+        loop=True
+
+def op_dsr(s):
+  a=input("<<FName< ")
+  with open("{}.txt".format(a),"w")as f:
+    loop=True
+    while loop==True:
+      b=input("<String< ")
+      if b=="q":
         loop=False
         f.close()
       else:
@@ -168,6 +181,7 @@ ops = {
     "dup": op_dup,
     "self": op_dup,
     "!out": op_out,
+    "dsr": op_dsr,
     "fmc": op_fmc,
     "flt": op_flt,
     "flc": op_flc,
