@@ -1,14 +1,23 @@
-__author__ = "randomdude999"
+__author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
-__credits__ = ["randomdude999", "LappySheep"]
 __license__ = "MIT"
-__version__ = "1.6"
+__version__ = "1.61"
+
+"""
+Special Thanks
+~~~~~~~~~~~~~~
+-> randomdude999 (changing the code to a more effective set)
+--> (also help with a lot of the concepts)
+-> TheBloodlessMan (help with some of the concepts)
+"""
 
 import math
 import decimal
 Dec = decimal.Decimal
 import functools
 import string
+import sys
+import os
 
 try:
     import readline
@@ -174,6 +183,28 @@ def op_flc(s):
         print()
         break
 
+def op_cbs(s):
+  a = pop_stack(s)
+  b = pop_stack(s)
+  if a == 1:
+    if str(b)[0] == ":":
+      with open("{}.rpn".format(b[1:]),"r")as f:
+        b=f.readlines()
+        for line in b:
+          if line[0] == ";":continue
+          try:
+            cmd = line
+            eval_cmd(cmd,variables)
+          except (EOFError, KeyboardInterrupt):
+            print()
+            break
+    else:
+      s.append(b)
+  else:
+    s.append(b)
+    s.append(a)
+    
+
 ops = {
     "eu": op_eu,
     "pi": op_pi,
@@ -185,6 +216,7 @@ ops = {
     "fmc": op_fmc,
     "flt": op_flt,
     "flc": op_flc,
+    "cbs": op_cbs,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
@@ -240,7 +272,8 @@ def eval_cmd(inp, variables):
                         del variables[var_name]
                     except KeyError:
                         raise UndefinedVariable(var_name)
-
+            elif x[0] == ":":
+              stack.append(x)
             else:
                 raise InvalidOperation()
         except ExecutionError as e:
