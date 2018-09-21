@@ -2,7 +2,7 @@ __author__ = "randomdude999"
 __copyright__ = "LSC"
 __credits__ = ["randomdude999", "LappySheep"]
 __license__ = "MIT"
-__version__ = "1.6"
+__version__ = "1.5"
 
 import math
 import decimal
@@ -140,20 +140,6 @@ def op_fmc(s):
         f.write(f"{b}\n")
         loop=True
 
-def op_fmk(s):
-  a=input("<<FName< ")
-  with open("{}.txt".format(a),"w")as f:
-    loop=True
-    while loop==True:
-      b=input("<Text< ")
-      if (len(b)==1)and(b=="q"):
-        loop=False
-        f.close()
-        main()
-      else:
-        f.write(f"{b}\n")
-        loop=True
-
 def op_flt(s):
   a=input("<<FName< ")
   with open("{}.txt".format(a),"r")as f:
@@ -167,6 +153,7 @@ def op_flc(s):
   with open("{}.rpn".format(a),"r")as f:
     b=f.readlines()
     for line in b:
+      if line[0] == ";":continue
       try:
         cmd = line
         eval_cmd(cmd,variables)
