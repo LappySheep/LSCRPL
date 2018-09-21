@@ -2,7 +2,7 @@ __author__ = "randomdude999"
 __copyright__ = "LSC"
 __credits__ = ["randomdude999", "LappySheep"]
 __license__ = "MIT"
-__version__ = "1.5"
+__version__ = "1.6"
 
 import math
 import decimal
@@ -127,6 +127,53 @@ def op_out(s):
     a = pop_stack(s)
     print(str(a))
 
+def op_fmc(s):
+  a=input("<<FName< ")
+  with open("{}.rpn".format(a),"w")as f:
+    loop=True
+    while loop==True:
+      b=input("<Code< ")
+      if (len(b)==1)and(b=="q"):
+        loop=False
+        f.close()
+      else:
+        f.write(f"{b}\n")
+        loop=True
+
+def op_fmk(s):
+  a=input("<<FName< ")
+  with open("{}.txt".format(a),"w")as f:
+    loop=True
+    while loop==True:
+      b=input("<Text< ")
+      if (len(b)==1)and(b=="q"):
+        loop=False
+        f.close()
+        main()
+      else:
+        f.write(f"{b}\n")
+        loop=True
+
+def op_flt(s):
+  a=input("<<FName< ")
+  with open("{}.txt".format(a),"r")as f:
+    b=f.read()
+    print(b)
+    f.close()
+    main()
+
+def op_flc(s):
+  a=input("<<FName< ")
+  with open("{}.rpn".format(a),"r")as f:
+    b=f.readlines()
+    for line in b:
+      try:
+        cmd = line
+        eval_cmd(cmd,variables)
+      except (EOFError, KeyboardInterrupt):
+        print()
+        break
+
 ops = {
     "eu": op_eu,
     "pi": op_pi,
@@ -134,6 +181,10 @@ ops = {
     "dup": op_dup,
     "self": op_dup,
     "!out": op_out,
+    "fmc": op_fmc,
+    "fmk": op_fmk,
+    "flt": op_flt,
+    "flc": op_flc,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
@@ -166,49 +217,6 @@ def eval_cmd(inp, variables):
     if tokens and tokens[0] == "dbg":
       debug_mode = True
       tokens = tokens[1:]
-    elif tokens and tokens[0] == "fmk": #File MaKe
-      a=input("<<FName< ")
-      with open("{}.txt".format(a),"w")as f:
-        loop=True
-        while loop==True:
-          b=input("<Text< ")
-          if (len(b)==1)and(b=="q"):
-            f.write("\n")
-            loop=False
-            f.close()
-            main()
-          else:
-            f.write(f"{b}\n")
-            loop=True
-    elif tokens and tokens[0] == "fmc": #File Make Code
-      a=input("<<FName< ")
-      with open("{}.rpn".format(a),"w")as f:
-        loop=True
-        while loop==True:
-          b=input("<Code< ")
-          if (len(b)==1)and(b=="q"):
-            f.write("\n")
-            loop=False
-            f.close()
-            main()
-          else:
-            f.write(f"{b}\n")
-            loop=True
-    elif tokens and tokens[0] == "flt": #File Load Text
-      a=input("<<FName< ")
-      with open("{}.txt".format(a),"r")as f:
-        b=f.read()
-        print(b)
-        f.close()
-        main()
-    """ TODO
-    elif tokens and tokens[0] == "flc": #File Load Code
-      a=input("<<FName< ")
-      with open("{}.rpn".format(a),"r")as f:
-        b=f.readlines()
-        for line in b:
-          eval_cmd(cmd, variables)
-    """
 
     for i, x in enumerate(tokens):
         try:
@@ -250,6 +258,7 @@ def eval_cmd(inp, variables):
 
 
 def main():
+    global variables
     variables = {}
     while True:
         try:
