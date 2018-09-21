@@ -16,8 +16,6 @@ import decimal
 Dec = decimal.Decimal
 import functools
 import string
-import sys
-import os
 
 try:
     import readline
