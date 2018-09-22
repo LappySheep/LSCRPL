@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.62"
+__version__ = "1.63"
 
 """
 Special Thanks
@@ -244,7 +244,25 @@ def op_nop(s): #does literally nothing
 def op_brk(s): #does "nothing"
   main() #... only if it is by itself
   #otherwise start over
-    
+
+def op_irp(s):
+  try:
+    a = pop_stack(s)
+    del a
+  except:
+    pass
+
+"""
+def op_arp(s):
+  try:
+    a = pop_stack(s)
+    b = pop_stack(s)
+    for i in range(a):
+      s.append("irp")
+    s.append(b)
+  except:
+    pass
+"""
 
 ops = {
     "eu": op_eu,
@@ -261,6 +279,8 @@ ops = {
     "jsr": op_jsr,
     "nop": op_nop,
     "brk": op_brk,
+    "irp": op_irp,
+    "arp": op_arp,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
