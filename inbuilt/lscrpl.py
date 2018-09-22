@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.61"
+__version__ = "1.62"
 
 """
 Special Thanks
@@ -16,6 +16,10 @@ import decimal
 Dec = decimal.Decimal
 import functools
 import string
+import sys
+def _stop():
+  stop=True
+  print("Stopped.")
 
 try:
     import readline
@@ -38,6 +42,12 @@ class InvalidVarName(ExecutionError):
         self.varname = varname
     def __str__(self):
         return f"Invalid variable name '{self.varname}'."
+
+class InvalidFuncName(ExecutionError):
+    def __init__(self, funcname):
+        self.funcname = funcname
+    def __str__(self):
+        return f"Invalid function name '{self.funcname}'."
 
 class UndefinedVariable(ExecutionError):
     def __init__(self, varname):
@@ -182,25 +192,58 @@ def op_flc(s):
         break
 
 def op_cbs(s):
-  a = pop_stack(s)
   b = pop_stack(s)
+  a = pop_stack(s)
   if a == 1:
     if str(b)[0] == ":":
-      with open("{}.rpn".format(b[1:]),"r")as f:
-        b=f.readlines()
-        for line in b:
-          if line[0] == ";":continue
-          try:
-            cmd = line
-            eval_cmd(cmd,variables)
-          except (EOFError, KeyboardInterrupt):
-            print()
-            break
+      try:
+        with open("{}.rpn".format(b[1:]),"r")as f:
+          c=f.readlines()
+          for line in c:
+            if line[0] == ";":continue
+            try:
+              cmd = line
+              eval_cmd(cmd,variables)
+            except (EOFError, KeyboardInterrupt):
+              print()
+              break
+      except FileNotFoundError:
+        raise InvalidFuncName(b[1:])
     else:
       s.append(b)
   else:
     s.append(b)
     s.append(a)
+
+def op_jsr(s):
+  a = pop_stack(s)
+  if str(a)[0] == ":":
+    try:
+      with open("{}.rpn".format(a[1:]),"r")as f:
+          b=f.readlines()
+          for line in b:
+            if line[0] == ";":continue
+            try:
+              cmd = line
+              eval_cmd(cmd,variables)
+            except (EOFError, KeyboardInterrupt):
+              print()
+              break
+    except FileNotFoundError:
+      raise InvalidFuncName(a[1:])
+  else:
+    s.append(a)
+
+def op_nop(s): #does literally nothing
+  try:
+    a = pop_stack(s)
+    s.append(a)
+  except:
+    pass
+
+def op_brk(s): #does "nothing"
+  main() #... only if it is by itself
+  #otherwise start over
     
 
 ops = {
@@ -215,6 +258,9 @@ ops = {
     "flt": op_flt,
     "flc": op_flc,
     "cbs": op_cbs,
+    "jsr": op_jsr,
+    "nop": op_nop,
+    "brk": op_brk,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
@@ -300,4 +346,4 @@ def main():
         eval_cmd(cmd, variables)
 
 if __name__ == '__main__':
-    main()
+  main()
