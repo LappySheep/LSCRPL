@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.63"
+__version__ = "1.64"
 
 """
 Special Thanks
@@ -252,6 +252,12 @@ def op_irp(s):
   except:
     pass
 
+def op_swp(s):
+  a = pop_stack(s)
+  b = pop_stack(s)
+  s.append(a)
+  s.append(b)
+
 """
 def op_arp(s):
   try:
@@ -280,7 +286,8 @@ ops = {
     "nop": op_nop,
     "brk": op_brk,
     "irp": op_irp,
-    "arp": op_arp,
+    "swp": op_swp,
+    #"arp": op_arp,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
