@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.66"
+__version__ = "1.67"
 
 """
 Special Thanks
@@ -17,6 +17,8 @@ Dec = decimal.Decimal
 import functools
 import string
 import sys
+from random import randint as RI
+from random import choice as RC
 
 subx,suby=0,0
 
@@ -119,6 +121,9 @@ unary_ops = {
     "rec": (lambda a: Dec(1/a)),
     "sqrt": (lambda a: round(Dec(a**Dec(0.5)))),
     "cbrt": (lambda a: round(Dec(a**Dec(1/3)))),
+    "adx": (lambda a: a+subx),
+    "ady": (lambda a: a+suby),
+    "dcd": (lambda a: Dec(RC((f"{a}")))),
 }
 
 def handle_unary_op(op, s):
