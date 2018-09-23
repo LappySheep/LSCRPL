@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.64"
+__version__ = "1.66"
 
 """
 Special Thanks
@@ -17,6 +17,9 @@ Dec = decimal.Decimal
 import functools
 import string
 import sys
+
+subx,suby=0,0
+
 def _stop():
   stop=True
   print("Stopped.")
@@ -258,17 +261,57 @@ def op_swp(s):
   s.append(a)
   s.append(b)
 
-"""
-def op_arp(s):
-  try:
-    a = pop_stack(s)
-    b = pop_stack(s)
-    for i in range(a):
-      s.append("irp")
-    s.append(b)
-  except:
-    pass
-"""
+
+def op_inx(s):
+  global subx
+  subx+=1
+
+def op_dex(s):
+  global subx
+  subx-=1
+
+def op_stx(s):
+  global subx
+  a=pop_stack(s)
+  subx=a
+
+def op_phx(s):
+  global subx
+  s.append(subx)
+
+def op_otx(s):
+  global subx
+  print(f">>  {subx}")
+
+def op_iny(s):
+  global suby
+  suby+=1
+
+def op_dey(s):
+  global suby
+  suby-=1
+
+def op_sty(s):
+  global suby
+  a=pop_stack(s)
+  suby=a
+
+def op_phy(s):
+  global suby
+  s.append(suby)
+
+def op_oty(s):
+  global suby
+  print(f">>  {suby}")
+
+def op_sxy(s):
+  global subx,suby
+  a,b=subx,suby
+  suby=b
+  subx=a
+  del a,b
+
+
 
 ops = {
     "eu": op_eu,
@@ -287,7 +330,17 @@ ops = {
     "brk": op_brk,
     "irp": op_irp,
     "swp": op_swp,
-    #"arp": op_arp,
+    "inx": op_inx,
+    "dex": op_dex,
+    "stx": op_stx,
+    "phx": op_phx,
+    "otx": op_otx,
+    "iny": op_iny,
+    "dey": op_dey,
+    "sty": op_sty,
+    "phy": op_phy,
+    "oty": op_oty,
+    "sxy": op_sxy,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
