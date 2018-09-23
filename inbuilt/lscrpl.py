@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.67"
+__version__ = "1.68"
 
 """
 Special Thanks
@@ -124,6 +124,9 @@ unary_ops = {
     "adx": (lambda a: a+subx),
     "ady": (lambda a: a+suby),
     "dcd": (lambda a: Dec(RC((f"{a}")))),
+    "src": (lambda a: Dec(RI(0,a))),
+    "nsrc": (lambda a: Dec(RI(-a,0))),
+    "msrc": (lambda a: Dec(RI(-a,a))),
 }
 
 def handle_unary_op(op, s):
