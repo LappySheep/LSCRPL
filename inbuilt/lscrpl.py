@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.68"
+__version__ = "1.69"
 
 """
 Special Thanks
@@ -67,8 +67,7 @@ def pop_stack(stack):
         raise StackTooSmallError()
 
 tern_ops = {
-  #"shta": (lambda a,b,c: )
-  # shortest angle; where a is the centre point, and where b and c are two other points - https://imgur.com/a/qhqkEWQ - a,b,c must all be 
+  "mdx": (lambda a,b,c: (a**b)%c),
 }
 
 def handle_ternop(op, s):
