@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.69"
+__version__ = "1.7"
 
 """
 Special Thanks
@@ -19,6 +19,7 @@ import string
 import sys
 from random import randint as RI
 from random import choice as RC
+
 
 subx,suby=0,0
 
@@ -53,6 +54,12 @@ class InvalidFuncName(ExecutionError):
         self.funcname = funcname
     def __str__(self):
         return f"Invalid function name '{self.funcname}'."
+
+class InvalidFileName(ExecutionError):
+    def __init__(self, filename):
+        self.filename = filename
+    def __str__(self):
+        return f"Invalid file name '{self.filename}'."
 
 class UndefinedVariable(ExecutionError):
     def __init__(self, varname):
@@ -183,24 +190,36 @@ def op_dsr(s):
 
 def op_flt(s):
   a=input("<<FName< ")
-  with open("{}.txt".format(a),"r")as f:
-    b=f.read()
-    print(b)
-    f.close()
-    main()
+  try:
+    with open("{}.txt".format(a),"r")as f:
+      b=f.read()
+      print(b)
+      f.close()
+      main()
+  except FileNotFoundError:
+    if a[0] == ":":
+      raise InvalidFileName(a[1:])
+    else:
+      raise InvalidFileName(a)
 
 def op_flc(s):
   a=input("<<FName< ")
-  with open("{}.rpn".format(a),"r")as f:
-    b=f.readlines()
-    for line in b:
-      if line[0] == ";":continue
-      try:
-        cmd = line
-        eval_cmd(cmd,variables)
-      except (EOFError, KeyboardInterrupt):
-        print()
-        break
+  try:
+    with open("{}.rpn".format(a),"r")as f:
+      b=f.readlines()
+      for line in b:
+        if line[0] == ";":continue
+        try:
+          cmd = line
+          eval_cmd(cmd,variables)
+        except (EOFError, KeyboardInterrupt):
+          print()
+          break
+  except FileNotFoundError:
+    if a[0] == ":":
+      raise InvalidFileName(a[1:])
+    else:
+      raise InvalidFileName(a)
 
 def op_cbs(s):
   b = pop_stack(s)
@@ -219,10 +238,63 @@ def op_cbs(s):
               print()
               break
       except FileNotFoundError:
-        raise InvalidFuncName(b[1:])
+        if b[0] == ":":
+          raise InvalidFileName(b[1:])
+        else:
+          raise InvalidFileName(b)
     else:
       s.append(b)
   else:
+    s.append(b)
+    s.append(a)
+
+def op_cbe(s):
+  c = pop_stack(s)
+  b = pop_stack(s)
+  a = pop_stack(s)
+  if a == 1:
+    if str(b)[0] == ":":
+      try:
+        with open("{}.rpn".format(b[1:]),"r")as f:
+          g=f.readlines()
+          for line in g:
+            if line[0] == ";":continue
+            try:
+              cmd = line
+              eval_cmd(cmd,variables)
+            except (EOFError, KeyboardInterrupt):
+              print()
+              break
+      except FileNotFoundError:
+        if b[0] == ":":
+          raise InvalidFileName(b[1:])
+        else:
+          raise InvalidFileName(b)
+  
+  elif a == 0:
+    if str(c)[0] == ":":
+      try:
+        with open("{}.rpn".format(c[1:]),"r")as f:
+          h=f.readlines()
+          for line in h:
+            if line[0] == ";":continue
+            try:
+              cmd = line
+              eval_cmd(cmd,variables)
+            except (EOFError, KeyboardInterrupt):
+              print()
+              break
+      except FileNotFoundError:
+          if c[0] == ":":
+            raise InvalidFileName(c[1:])
+          else:
+            raise InvalidFileName(c)
+
+    else:
+      s.append(c)
+      s.append(b)
+  else:
+    s.append(c)
     s.append(b)
     s.append(a)
 
@@ -244,6 +316,43 @@ def op_jsr(s):
       raise InvalidFuncName(a[1:])
   else:
     s.append(a)
+
+def op_pts(s):
+  b = pop_stack(s)
+  a = pop_stack(s)
+  if a == 1:
+    if str(b)[0] == ":":
+      try:
+        with open("{}.rpn".format(b[1:]),"r")as f:
+          c=f.read()
+          print(f">> {c}")
+      except FileNotFoundError:
+        raise InvalidFuncName(b[1:])
+    else:
+      s.append(b)
+  else:
+    s.append(b)
+    s.append(a)
+
+def op_pt2(s):
+  c = pop_stack(s)
+  b = pop_stack(s)
+  a = pop_stack(s)
+  if a == 1:
+    if str(b)[0] == ":":
+      try:
+        with open("{}.rpn".format(b[1:]),"r")as f:
+          g=f.read()
+          print(f">> {g}")
+      except FileNotFoundError:
+        raise InvalidFuncName(b[1:])
+  elif a == 0:
+    try:
+      with open("{}.rpn".format(c[1:]),"r")as f:
+        h=f.read()
+        print(f">> {h}")
+    except FileNotFoundError:
+      raise InvalidFuncName(c[1:])
 
 def op_nop(s): #does literally nothing
   try:
@@ -349,6 +458,9 @@ ops = {
     "phy": op_phy,
     "oty": op_oty,
     "sxy": op_sxy,
+    "pts": op_pts,
+    "cbe": op_cbe,
+    "pt2": op_pt2,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
@@ -434,4 +546,7 @@ def main():
         eval_cmd(cmd, variables)
 
 if __name__ == '__main__':
+  with open("brk.rpn","w")as f:
+    f.write("brk")
+    f.close()
   main()
