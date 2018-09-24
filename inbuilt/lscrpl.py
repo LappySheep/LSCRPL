@@ -96,6 +96,7 @@ bin_ops = {
     "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10), # deprecated synonym
     "max": (lambda a,b: max(a,b)),
     "min": (lambda a,b: min(a,b)),
+    "gin": (lambda a,b: Dec((str(a))[b-1])),
 }
 
 def handle_binop(op, s):
