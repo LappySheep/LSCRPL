@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.71"
+__version__ = "1.72"
 
 """
 Special Thanks
@@ -21,6 +21,7 @@ from random import randint as RI
 from random import choice as RC
 
 subx,suby=0,0
+constrFlag = ""
 
 def _stop():
   stop=True
@@ -65,6 +66,12 @@ class UndefinedVariable(ExecutionError):
         self.varname = varname
     def __str__(self):
         return f"Variable '{self.varname}' isn't defined."
+
+class InvalidFlagChar(ExecutionError):
+    def __init__(self, fcharname):
+        self.fcharname = fcharname
+    def __str__(self):
+        return f"Flag character '{self.fcharname}' isn't defined."
 
 def pop_stack(stack):
     try:
@@ -449,6 +456,27 @@ def op_npr(s):
   if d!=0:s.append(c/d)
 
 
+def op_mff(s):
+  inp = input("<Char+FName< ")
+  with open("{}.rpnf".format(inp[1:]),"w")as f:
+    f.write(inp[0])
+    f.close()
+
+def op_gff(s):
+  global constrFlag
+  inp = input("<FName< ")
+  try: 
+    with open("{}.rpnf".format(inp),"r")as f:
+      char = f.read()
+      constrFlag+=char
+      f.close()
+  except FileNotFoundError:
+    raise InvalidFlagChar(inp)
+
+def op_outf(s):
+  global constrFlag
+  print(constrFlag)if constrFlag !=""else print("Flag does not exist")
+
 
 ops = {
     "eu": op_eu,
@@ -483,6 +511,9 @@ ops = {
     "pt2": op_pt2,
     "ncr": op_ncr,
     "npr": op_npr,
+    "mff": op_mff,
+    "gff": op_gff,
+    "outf": op_outf,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
