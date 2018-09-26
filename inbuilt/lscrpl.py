@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.7"
+__version__ = "1.71"
 
 """
 Special Thanks
@@ -19,7 +19,6 @@ import string
 import sys
 from random import randint as RI
 from random import choice as RC
-
 
 subx,suby=0,0
 
@@ -134,6 +133,7 @@ unary_ops = {
     "src": (lambda a: Dec(RI(0,a))),
     "nsrc": (lambda a: Dec(RI(-a,0))),
     "msrc": (lambda a: Dec(RI(-a,a))),
+    "fct": (lambda a: Dec(math.factorial(a)if a>=0else 0))
 }
 
 def handle_unary_op(op, s):
@@ -429,6 +429,26 @@ def op_sxy(s):
   del a,b
 
 
+def op_ncr(s):
+  b = pop_stack(s)
+  a = pop_stack(s)
+  
+  c = math.factorial(a)if a>=0else 0
+  d = math.factorial(a-b)if (a-b)>=0else 0
+  e = math.factorial(b)if b>=0else 0
+
+  if d*e!=0:s.append(c/(d*e))
+
+def op_npr(s):
+  b = pop_stack(s)
+  a = pop_stack(s)
+
+  c = math.factorial(a)if a>=0 else 0
+  d = math.factorial(a-b)if (a-b)>=0else 0
+
+  if d!=0:s.append(c/d)
+
+
 
 ops = {
     "eu": op_eu,
@@ -461,6 +481,8 @@ ops = {
     "pts": op_pts,
     "cbe": op_cbe,
     "pt2": op_pt2,
+    "ncr": op_ncr,
+    "npr": op_npr,
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
