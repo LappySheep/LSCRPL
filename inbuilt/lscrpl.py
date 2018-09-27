@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.73"
+__version__ = "1.74"
 
 """
 Special Thanks
@@ -478,6 +478,30 @@ def op_outf(s):
   print(constrFlag)if constrFlag !=""else print("Flag does not exist")
 
 
+def op_trace(s):
+  a = pop_stack(s)
+  s.append(a)
+  try:
+    a+=0
+    if int(a)==a:
+      print("{}\nType: Integer".format(a))
+    else:
+      print("{}\nType: Float".format(a))
+  except TypeError:
+    if a[0]==":":
+      try:
+        with open("{}.rpn".format(a[1:]),"r")as f:
+          b,d=[list(map(int,line.strip().split(' ')))for line in f],0
+          for c in b:d+=len(c)
+          print("{}\nType: Function, Exists\nItem Count:{}".format(a[1:],d))
+      except FileNotFoundError:
+        print("{}\nType: Function, Does Not Exist\nItem Count: N/A".format(a[1:]))
+    else:
+      print("{}\nType: Unidentified".format(a))
+      
+
+
+
 ops = {
     "eu": op_eu,
     "pi": op_pi,
@@ -514,6 +538,7 @@ ops = {
     "mff": op_mff,
     "gff": op_gff,
     "outf": op_outf,
+    "!trace": op_trace
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
