@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.74"
+__version__ = "1.75"
 
 """
 Special Thanks
@@ -22,6 +22,7 @@ from random import choice as RC
 
 subx,suby=0,0
 constrFlag = ""
+positions=[[],[]]
 
 def _stop():
   stop=True
@@ -500,6 +501,43 @@ def op_trace(s):
       print("{}\nType: Unidentified".format(a))
       
 
+def op_adp(s):
+  global positions
+  b=pop_stack(s)
+  a=pop_stack(s)
+  positions[0].append(a)
+  positions[1].append(b)
+
+def op_vwp(s):
+  global positions
+  a=pop_stack(s)-1
+  try:
+    e=[row[int(a)] for row in positions]
+    print(f"{e[0]}, {e[1]}")
+  except IndexError:
+    b=len(positions[0])
+    c="are"if b>0else"is"
+    d="s"if b>0else""
+    print(f"There {c} only {b} set{d} of positions. {a+1} positions cannot be loaded.")
+
+def op_gtp(s):
+  global positions
+  a=pop_stack(s)-1
+  b=[row[int(a)] for row in positions]
+  s.append(b[0])
+  s.append(b[1])
+
+def op_arp(s):
+  global positions
+  b=pop_stack(s)-1
+  a=pop_stack(s)-1
+  c=[row[int(a)] for row in positions]
+  d=[row[int(b)] for row in positions]
+  for value in c:
+    e=c.index(value)
+    f,g=c[e-1]+d[e-1],c[e]+d[e]
+  s.append(f)
+  s.append(g)
 
 
 ops = {
@@ -538,7 +576,12 @@ ops = {
     "mff": op_mff,
     "gff": op_gff,
     "outf": op_outf,
-    "!trace": op_trace
+    "!trace": op_trace,
+    "adp": op_adp,
+    "vwp": op_vwp,
+    "gtp": op_gtp,
+    "arp": op_arp,
+    
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
