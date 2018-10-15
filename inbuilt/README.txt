@@ -4,39 +4,6 @@ A slightly modified version of what is known as "reverse polish"; a stack based 
 Previously this was pseudocode. As of 07/09/18 22:22, an interpreter was created.
 
 
-Available:
-add
-sub
-mul
-div
-fdiv (floor divide; return quotient from division)
-mod (return remainder from division)
-abs (return absolute value of current state)
-eu (Euler's number; avoid typing out the whole number - to 10 decimal places)
-pi (pi; avoid typing out the whole number - to 10 decimal places)
-gt (greater than)
-gte (greater than or equal to)
-lt (less than)
-lte (less than or equal to)
-eq (equal to)
-neq (not equal to)
-eq0 (equal to 0)
-neq0 (not equal to 0)
-pow (power)
-nrt (n-th root)
-gpw (get power)
-sin
-cos
-tan
-rup (round up)
-rdw (round down)
-dup
-->[letter] (e.g. ->a) (pop from stack and store to variable)
-<-[letter] (e.g. <-a) (push the value of the varible on the stack)
---[letter] (e.g. --a) (delete the variable)
-!out (pop a value from the stack and print it)
-pn1 (n^-1)
-!inp (push a value to the stack)
 
 Todo:
 
