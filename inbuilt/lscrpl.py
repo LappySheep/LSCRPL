@@ -106,8 +106,8 @@ bin_ops = {
     "pow": (lambda a,b: a**b),
     "nrt": (lambda a,b: a**(1/b)),
     # rounding to 10 places because the log function isn't very accurate
-    "log": (lambda a,b: round(Dec(math.log(a,b))), 10),
-    "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10), # deprecated synonym
+    "log": (lambda a,b: round(Dec(math.log(a,b)), 10)),
+    "gpw": (lambda a,b: round(Dec(math.log(a,b)), 10)), # deprecated synonym
     "max": (lambda a,b: max(a,b)),
     "min": (lambda a,b: min(a,b)),
     "gin": (lambda a,b: Dec((str(a))[int(b)-1])),
