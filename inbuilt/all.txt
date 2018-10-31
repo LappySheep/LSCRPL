@@ -48,10 +48,10 @@ Binary Operators
 -- Returns the b-th root of a (a ^ (1/b)).
 
 - a b log
--- currently broken, will be fixed.
+-- Returns the exponent given the base and the result
 
 - a b gpw
--- currently broken, will be fixed [Note - deprecated opcode].
+-- Returns the exponent given the base and the result [Note - deprecated opcode].
 
 - a b max
 -- Returns the largest of a and b.
