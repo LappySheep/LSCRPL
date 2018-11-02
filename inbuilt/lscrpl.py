@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.75"
+__version__ = "1.76"
 
 """
 Special Thanks
@@ -81,7 +81,7 @@ def pop_stack(stack):
         raise StackTooSmallError()
 
 tern_ops = {
-  "mdx": (lambda a,b,c: (a**b)%c),
+  "mdx": (lambda a,b,c: pow(a,b,c)),
 }
 
 def handle_ternop(op, s):
@@ -106,8 +106,9 @@ bin_ops = {
     "pow": (lambda a,b: a**b),
     "nrt": (lambda a,b: a**(1/b)),
     # rounding to 10 places because the log function isn't very accurate
-    "log": (lambda a,b: round(Dec(math.log(a,b)), 10)),
-    "gpw": (lambda a,b: round(Dec(math.log(a,b)), 10)), # deprecated synonym
+    "log": (lambda a,b: round(Dec(math.log(a,b))), 10),
+    "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10),
+    # deprecated synonym
     "max": (lambda a,b: max(a,b)),
     "min": (lambda a,b: min(a,b)),
     "gin": (lambda a,b: Dec((str(a))[int(b)-1])),
