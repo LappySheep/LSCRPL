@@ -165,7 +165,7 @@ Other Operators:
 - flt
 -- Load a string, from a file.
 
-- fmc
+- flc
 -- Load code from a function, from a file.
 
 - a b cbs
