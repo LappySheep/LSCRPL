@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.77"
+__version__ = "1.78"
 
 """
 Special Thanks
@@ -9,6 +9,11 @@ Special Thanks
 -> randomdude999 (changing the code to a more effective set)
 --> (also help with a lot of the concepts)
 -> TheBloodlessMan (help with some of the concepts)
+
+
+Newest Additions
+~~~~~~~~~~~~~~~~
+flt opcode modified so that it can run freely in a script rather than alone.
 """
 
 import math
@@ -206,13 +211,21 @@ def op_dsr(s): #define string, can be multi-line
         loop=True
 
 def op_flt(s): #load text file
-  a=input("<<FName< ")
+  temp = pop_stack(s)
+  c=True
+  if temp[0] != "@":
+    a=input("<<FName< ")
+    stack.append(temp)
+  else:
+    a=temp[1:]
+    c=False
   try:
     with open("{}.txt".format(a),"r")as f:
       b=f.read()
       print(b)
       f.close()
-      main()
+      if c:
+        main()
   except FileNotFoundError:
     if a[0] == ":":
       raise InvalidFileName(a[1:])
@@ -220,6 +233,7 @@ def op_flt(s): #load text file
       raise InvalidFileName(a)
 
 def op_flc(s): #trigger code file
+  #note - to run freely, use jsr
   a=input("<<FName< ")
   try:
     with open("{}.rpn".format(a),"r")as f:
@@ -652,6 +666,8 @@ def eval_cmd(inp, variables):
                     except KeyError:
                         raise UndefinedVariable(var_name)
             elif x[0] == ":":
+              stack.append(x)
+            elif x[0] == "@":
               stack.append(x)
             else:
                 raise InvalidOperation()
