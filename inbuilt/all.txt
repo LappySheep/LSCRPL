@@ -193,7 +193,7 @@ Other Operators:
 -- Ignores the next instruction by removing it.
 
 - swp
--- Swaps the top 2 values on the stack from (a,b) to (b,a).
+-- Swaps the top 2 values on the stack from (<a>,<b>) to (<b>,<a>).
 
 - a b ncr
 -- Returns (<a>)C(<b>).
