@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.78"
+__version__ = "1.78b"
 
 """
 Special Thanks
@@ -13,7 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
-flt opcode modified so that it can run freely in a script rather than alone.
+1.78b - vwp issue partially fixed, might come back to this
+1.78 - flt opcode modified so that it can run freely in a script rather than alone.
 """
 
 import math
@@ -543,9 +544,9 @@ def op_vwp(s): #view two positions (x_n,y_n)
     print(f"{e[0]}, {e[1]}")
   except IndexError:
     b=len(positions[0])
-    c="are"if b>0else"is"
-    d="s"if b>0else""
-    print(f"There {c} only {b} set{d} of positions. {a+1} positions cannot be loaded.")
+    c="are"if b!=1else"is"
+    d="s"if b!=1else""
+    print(f"There {c} only {b} set{d} of positions. {a+1} set(s) of positions cannot be loaded.")
 
 def op_gtp(s): #get positions (x_n,y_n) and adds to stack
   global positions
