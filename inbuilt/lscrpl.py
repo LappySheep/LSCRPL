@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.78b"
+__version__ = "1.78c"
 
 """
 Special Thanks
@@ -13,8 +13,13 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
-1.78b - vwp issue partially fixed, might come back to this
-1.78 - flt opcode modified so that it can run freely in a script rather than alone.
+1.78c:
+- Added lgv and lgf (log view, log file).
+- Logs added to some processes.
+1.78b:
+- vwp issue partially fixed, might come back to this.
+1.78:
+- flt opcode modified so that it can run freely in a script rather than alone.
 """
 
 import math
@@ -29,6 +34,7 @@ from random import choice as RC
 subx,suby=0,0
 constrFlag = ""
 positions=[[],[]]
+logs,logIndex=[],0
 
 def _stop():
   stop=True
@@ -216,7 +222,7 @@ def op_flt(s): #load text file
   c=True
   if temp[0] != "@":
     a=input("<<FName< ")
-    stack.append(temp)
+    s.append(temp)
   else:
     a=temp[1:]
     c=False
@@ -568,6 +574,23 @@ def op_arp(s): #add positions (x_n,y_n) to (x_m,y_m)
   s.append(g)
 
 
+def op_lgv(s): #view logs
+  global logs
+  out = ""
+  for item in logs:
+    out += f"{item}"
+  print(out)
+
+def op_lgf(s): #put logs in file
+  global logs
+  out = ""
+  for item in logs:
+    out += f"{item}"
+  with open("logs.txt","w")as f:
+    f.write(out)
+    f.close()
+
+
 ops = {
     "eu": op_eu,
     "pi": op_pi,
@@ -610,6 +633,8 @@ ops = {
     "vwp": op_vwp,
     "gtp": op_gtp,
     "arp": op_arp,
+    "lgv": op_lgv,
+    "lgf": op_lgf,
     
 }
 # merge tern_ops into ops
@@ -637,6 +662,10 @@ def is_integer(x):
     return True
 
 def eval_cmd(inp, variables):
+    global logIndex
+    temp = f"""Process {logIndex}: ~{inp}~\nVariables: {variables}\n\n"""
+    logs.append(temp)
+    logIndex+=1
     tokens = split_input(inp)
     stack = []
     debug_mode = False
@@ -653,26 +682,33 @@ def eval_cmd(inp, variables):
             elif len(x) == 3 and x[0:2] in ("->", "<-", "--"):
                 var_name = x[2]
                 if var_name not in string.ascii_letters:
+                    logs.append(f"Process {logIndex} failed\n\n")
                     raise InvalidVarName(var_name)
                 if x[0:2] == "->":
                     variables[var_name] = pop_stack(stack)
                 elif x[0:2] == "<-":
                     try:
                         stack.append(variables[var_name])
+                        logs.append(f"Process {logIndex} - variable {var_name} set successfully")
                     except KeyError:
+                        logs.append(f"Process {logIndex} failed\n\n")
                         raise UndefinedVariable(var_name)
                 elif x[0:2] == "--":
                     try:
                         del variables[var_name]
+                        logs.append(f"Process {logIndex} - variable {var_name} deleted successfully")
                     except KeyError:
+                        logs.append(f"Process {logIndex} failed\n\n")
                         raise UndefinedVariable(var_name)
             elif x[0] == ":":
               stack.append(x)
             elif x[0] == "@":
               stack.append(x)
             else:
+                logs.append(f"Process {logIndex} failed\n\n")
                 raise InvalidOperation()
         except ExecutionError as e:
+            logs.append(f"Process {logIndex} failed\n\n")
             print(f"Error occurred while evaluating token {x} (index {i}):")
             print(e)
             return
@@ -681,9 +717,11 @@ def eval_cmd(inp, variables):
             if stack:
                 print(" ".join(str(x) for x in stack))
             print(f"Token count: {len(tokens)}")
+            logs.append(f"Process {logIndex} - debug used")
     else:
         if stack:
             print(str(stack.pop()))
+            logs.append(f"Process {logIndex} - last stack item returned")
 
 
 def main():
