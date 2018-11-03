@@ -1,51 +1,51 @@
 Ternary Operators
 - a b c mdx
--- Returns (a^b)%c.
+-- Returns (<a>^<b>) mod <c>.
 
 
 
 Binary Operators
 - a b add
--- Returns a+b
+-- Returns <a>+<b>
 
 - a b sub
--- Returns a-b
+-- Returns <a>-<b>
 
 - a b mul
--- Returns a*b
+-- Returns <a>*<b>
 
 - a b div
--- Returns a/b, unless b is 0. If b is 0, 0 is returned instead.
+-- Returns <a>/<b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
 
 - a b fdiv
--- Returns a rounded-down answer for a/b, unless b is 0. If b is 0, 0 is returned instead.
+-- Returns <a> rounded-down answer for <a>/<b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
 
 - a b mod
--- Returns the remainder of the division a/b, unless b is 0. If b is 0, 0 is returned instead.
+-- Returns the remainder of the division <a>/<b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
 
 - a b gt
--- Returns 1 if a > b, returns 0 if a !> b.
+-- Returns 1 if <a> > <b>, returns 0 if <a> !> <b>.
 
 - a b gte
--- Returns 1 if a > b or a == b, returns 0 if a !> b and a != 0.
+-- Returns 1 if <a> > <b> or <a> == <b>, returns 0 if <a> !> <b> and <a> != 0.
 
 - a b lt
--- Returns 1 if a < b, returns 0 if a !< b.
+-- Returns 1 if <a> < <b>, returns 0 if <a> !< <b>.
 
 - a b lte
--- Returns 1 if a < b or a == b, returns 0 if a !< b and a != 0.
+-- Returns 1 if <a> < <b> or <a> == <b>, returns 0 if <a> !< <b> and <a> != 0.
 
 - a b eq
--- Returns 1 if a == b, returns 0 if a != b.
+-- Returns 1 if <a> == <b>, returns 0 if <a> != <b>.
 
 - a b neq
--- Returns 1 if a != b, returns 0 if a == b.
+-- Returns 1 if <a> != <b>, returns 0 if <a> == <b>.
 
 - a b pow
--- Returns a ^ b.
+-- Returns <a> ^ <b>.
 
 - a b nrt
--- Returns the b-th root of a (a ^ (1/b)).
+-- Returns the <b>-th root of <a> (<a> ^ (1/<b>)).
 
 - a b log
 -- Returns the exponent given the base and the result
@@ -54,85 +54,85 @@ Binary Operators
 -- Returns the exponent given the base and the result [Note - deprecated opcode].
 
 - a b max
--- Returns the largest of a and b.
+-- Returns the largest of <a> and <b>.
 
 - a b min
--- Returns the smallest of a and b.
+-- Returns the smallest of <a> and <b>.
 
 - a b gin
--- Returns the b-th value of a.
+-- Returns the <b>-th value of <a>.
 
 
 
 Unary Operators:
 - a sin
--- Returns the sine of a degrees
+-- Returns the sine of <a> degrees
 
 - a cos
--- Returns the cosine of a degrees
+-- Returns the cosine of <a> degrees
 
 - a tan
--- Returns the tangent of a degrees if a is not 90, otherwise return 0.
+-- Returns the tangent of <a> degrees if <a> is not 90, otherwise return 0.
 
 - a asn
--- Returns the arc-sine of a if a is between -1 and 1, otherwise return 0.
+-- Returns the arc-sine of <a> if <a> is between -1 and 1, otherwise return 0.
 
 - a acs
--- Returns the arc-cosine of a if a is between -1 and 1, otherwise return 0.
+-- Returns the arc-cosine of <a> if <a> is between -1 and 1, otherwise return 0.
 
 - a rup
--- Rounds a up to the next integer value.
+-- Rounds <a> up to the next integer value.
 
 - a rdw
--- Rounds a down to the previous integer value.
+-- Rounds <a> down to the previous integer value.
 
 - a inc
--- Increments a.
+-- Increments <a>.
 
 - a dec
--- Decrements a.
+-- Decrements <a>.
 
 - a neg
--- Negates the sign of a.
+-- Negates the sign of <a>.
 
 - a abs
--- Returns the absolute value of a
+-- Returns the absolute value of <a>
 
 - a eq0
--- Returns 1 if a equals 0 otherwise return 0.
+-- Returns 1 if <a> equals 0 otherwise return 0.
 
 - a neq0
--- Returns 1 if a does not equal 0 otherwise return 0.
+-- Returns 1 if <a> does not equal 0 otherwise return 0.
 
 - a rec
--- Returns the reciprocal of a.
+-- Returns the reciprocal of <a>.
 
 - a sqrt
--- Returns the square root of a.
+-- Returns the square root of <a>.
 
 - a cbrt
--- Returns the cube root of a.
+-- Returns the cube root of <a>.
 
 - a adx
--- Adds a to the x register.
+-- Adds <a> to the [x] register.
 
 - a ady
--- Adds a to the y register.
+-- Adds <a> to the [y] register.
 
 - a dcd
--- Returns a random "character" from a.
+-- Returns a random "character" from <a>.
 
 - a src
--- Returns a random number from 0 to a.
+-- Returns a random number from 0 to <a>.
 
 - a nsrc
--- Returns a random number from -a to 0.
+-- Returns a random number from -<a> to 0.
 
 - a msrc
--- Returns a random number from -a to a.
+-- Returns a random number from -<a> to a.
 
 - a fct
--- Returns the factorial of a.
+-- Returns the factorial of <a>.
 
 
 
@@ -169,19 +169,19 @@ Other Operators:
 -- Load code from a function, from a file.
 
 - a b cbs
--- If a is equal to 1, trigger function b.
+-- If <a> is equal to 1, trigger function <b>.
 
 - a b c cbs
--- If a is equal to 1, trigger function b. If a is equal to 0, trigger function c.
+-- If <a> is equal to 1, trigger function <b>. If a is equal to 0, trigger function <c>.
 
 - a jsr
--- Trigger function a.
+-- Trigger function <a>.
 
 - a b pts
--- If a is equal to 1, output the contents of the code in function b.
+-- If <a> is equal to 1, output the contents of the code in function <b>.
 
 - a b c pt2
--- If a is equal to 1, output the contents of the code in function b. If a is equal to 0, output the contents of the code in function c.
+-- If <a> is equal to 1, output the contents of the code in function <b>. If a is equal to 0, output the contents of the code in function <c>.
 
 - nop
 -- Does "nothing". This takes a value from the stack if possible, and immediately returns it.
@@ -196,50 +196,50 @@ Other Operators:
 -- Swaps the top 2 values on the stack from (a,b) to (b,a).
 
 - a b ncr
--- Returns (a)C(b).
+-- Returns (<a>)C(<b>).
 
 - a b npr
--- Returns (a)P(b).
+-- Returns (<a>)P(<b>).
 
 - a !trace
--- Returns basic properties of a.
+-- Returns basic properties of <a>.
 
 
 
 Register-related Opcodes:
 - inx
--- Increment the x register.
+-- Increment the [x] register.
 
 - dex
--- Decrement the x register.
+-- Decrement the [x] register.
 
 - a stx
--- Sets the x register as a.
+-- Sets the [x] register as <a>.
 
 - phx
--- Pushes the value of the x register on to the stack.
+-- Pushes the value of the [x] register on to the stack.
 
 - otx
--- Outputs the value of the x register to stdout. Use this mainly for debugging.
+-- Outputs the value of the [x] register to stdout. Use this mainly for debugging.
 
 
 - iny
--- Increment the y register.
+-- Increment the [y] register.
 
 - dey
--- Decrement the y register.
+-- Decrement the [y] register.
 
 - a sty
--- Sets the y register as a.
+-- Sets the [y] register as <a>.
 
 - phy
--- Pushes the value of the y register on to the stack.
+-- Pushes the value of the [y] register on to the stack.
 
 - oty
--- Outputs the value of the y register to stdout. Use this mainly for debugging.
+-- Outputs the value of the [y] register to stdout. Use this mainly for debugging.
 
 - sxy
--- Swaps the values of the x register and the y register.
+-- Swaps the values of the [x] register and the [y] register.
 
 
 
@@ -257,16 +257,16 @@ Flag-related Opcodes:
 
 Position-related Opcodes:
 - a b adp
--- Appends a to the list of x positions and appends b to the list of y positions.
+-- Appends <a> to the list of x positions and appends <b> to the list of y positions.
 
 - a vwp
--- Outputs the x,y positions of the n-th set of positions.
+-- Outputs the x,y positions of the <a>-th set of positions.
 
 - a gtp
--- Appends the x and y positions of the n-th set of positions to the stack. Note that the x position is pushed before the y position.
+-- Appends the x and y positions of the <a>-th set of positions to the stack. Note that the x position is pushed before the y position.
 -- This means that the y position will be called first if the stack values are requested.
 -- Negate this effect using swp.
 
 - a b arp
--- Takes the x,y positions of the a-th set and the b-th sets of positions, adds the two x positions together in to one, adds the two y positions together in to one, and returns the new x position and the new y position (in that order).
+-- Takes the x,y positions of the <a>-th set and the <b>-th sets of positions, adds the two x positions together in to one, adds the two y positions together in to one, and returns the new x position and the new y position (in that order).
 -- Negate this effect using swp. 
