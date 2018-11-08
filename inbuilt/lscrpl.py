@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.78c"
+__version__ = "1.78d"
 
 """
 Special Thanks
@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.78d:
+- Added tdl (time delay)
 1.78c:
 - Added lgv and lgf (log view, log file).
 - Logs added to some processes.
@@ -28,6 +30,7 @@ Dec = decimal.Decimal
 import functools
 import string
 import sys
+import time
 from random import randint as RI
 from random import choice as RC
 
@@ -590,6 +593,10 @@ def op_lgf(s): #put logs in file
     f.write(out)
     f.close()
 
+def op_tdl(s): #time delay
+  a=pop_stack(s)
+  time.sleep(a/1000)
+
 
 ops = {
     "eu": op_eu,
@@ -635,6 +642,7 @@ ops = {
     "arp": op_arp,
     "lgv": op_lgv,
     "lgf": op_lgf,
+    "tdl": op_tdl,
     
 }
 # merge tern_ops into ops
@@ -689,14 +697,14 @@ def eval_cmd(inp, variables):
                 elif x[0:2] == "<-":
                     try:
                         stack.append(variables[var_name])
-                        logs.append(f"Process {logIndex} - variable {var_name} set successfully")
+                        logs.append(f"Process {logIndex} - variable {var_name} set successfully\n\n")
                     except KeyError:
                         logs.append(f"Process {logIndex} failed\n\n")
                         raise UndefinedVariable(var_name)
                 elif x[0:2] == "--":
                     try:
                         del variables[var_name]
-                        logs.append(f"Process {logIndex} - variable {var_name} deleted successfully")
+                        logs.append(f"Process {logIndex} - variable {var_name} deleted successfully\n\n")
                     except KeyError:
                         logs.append(f"Process {logIndex} failed\n\n")
                         raise UndefinedVariable(var_name)
@@ -717,11 +725,11 @@ def eval_cmd(inp, variables):
             if stack:
                 print(" ".join(str(x) for x in stack))
             print(f"Token count: {len(tokens)}")
-            logs.append(f"Process {logIndex} - debug used")
+            logs.append(f"Process {logIndex} - debug used\n\n")
     else:
         if stack:
             print(str(stack.pop()))
-            logs.append(f"Process {logIndex} - last stack item returned")
+            logs.append(f"Process {logIndex} - last stack item returned\n\n")
 
 
 def main():
