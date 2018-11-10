@@ -171,7 +171,7 @@ Other Operators:
 - a b cbs
 -- If <a> is equal to 1, trigger function <b>.
 
-- a b c cbs
+- a b c cbe
 -- If <a> is equal to 1, trigger function <b>. If a is equal to 0, trigger function <c>.
 
 - a jsr
