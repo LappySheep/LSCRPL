@@ -204,6 +204,9 @@ Other Operators:
 - a !trace
 -- Returns basic properties of <a>.
 
+- a tdl
+-- Pauses for <a> seconds.
+
 
 
 Register-related Opcodes:
@@ -270,3 +273,12 @@ Position-related Opcodes:
 - a b arp
 -- Takes the x,y positions of the <a>-th set and the <b>-th sets of positions, adds the two x positions together in to one, adds the two y positions together in to one, and returns the new x position and the new y position (in that order).
 -- Negate this effect using swp. 
+
+
+
+Logging-related Opcodes:
+- lgv
+-- Prints the current logs. This shows the history of the commands used, etc. Logs cannot be cleared.
+
+- lgf
+-- Prints the current logs but to a file.
