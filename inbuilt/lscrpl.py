@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.78d"
+__version__ = "1.78d2"
 
 """
 Special Thanks
@@ -13,8 +13,10 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.78d2:
+- Added help commands - topc, bopc, uopc, oopc.
 1.78d:
-- Added tdl (time delay)
+- Added tdl (time delay).
 1.78c:
 - Added lgv and lgf (log view, log file).
 - Logs added to some processes.
@@ -595,7 +597,114 @@ def op_lgf(s): #put logs in file
 
 def op_tdl(s): #time delay
   a=pop_stack(s)
-  time.sleep(a/1000)
+  time.sleep(a)
+
+
+
+def op_topc(s):
+  print("""
+  Ternary opcodes:
+  mdx
+  """)
+
+def op_bopc(s):
+  print("""
+  Binary opcodes:
+  add
+  sub
+  mul
+  div
+  fdiv
+  gt
+  gte
+  lt
+  lte
+  eq
+  neq
+  pow
+  nrt
+  log
+  gpw
+  max
+  min
+  gin
+  """)
+
+def op_uopc(s):
+  print("""
+  Unary opcodes:
+  sin
+  cos
+  tan
+  asn
+  acs
+  rup
+  rdw
+  inc
+  dec
+  neg
+  abs
+  eq0
+  neq0
+  rec
+  sqrt
+  cbrt
+  adx
+  ady
+  dcd
+  src
+  nsrc
+  msrc
+  fct
+  """)
+
+def op_oopc(s):
+  print("""
+  Other opcodes:
+  eu
+  pi
+  !inp
+  dup
+  self
+  !out
+  dsr
+  fmc
+  flt
+  flc
+  cbs
+  cbe
+  jsr
+  pts
+  pt2
+  nop
+  brk
+  irp
+  swp
+  ncr
+  npr
+  !trace
+  inx
+  dex
+  stx
+  phx
+  otx
+  iny
+  dey
+  sty
+  phy
+  oty
+  sxy
+  mff
+  gff
+  outf
+  adp
+  vwp
+  gtp
+  arp
+  tdl
+  lgv
+  lgf
+  """)
 
 
 ops = {
@@ -643,6 +752,10 @@ ops = {
     "lgv": op_lgv,
     "lgf": op_lgf,
     "tdl": op_tdl,
+    "topc": op_topc,
+    "bopc": op_bopc,
+    "uopc": op_uopc,
+    "oopc": op_oopc,
     
 }
 # merge tern_ops into ops
