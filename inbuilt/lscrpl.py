@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.78d2"
+__version__ = "1.79"
 
 """
 Special Thanks
@@ -13,6 +13,9 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.79:
+- Added sqtr, cbtr (square/cube root rounded), removed rounding for the original opcodes.
+- Changed help commands to be more efficient.
 1.78d2:
 - Added help commands - topc, bopc, uopc, oopc.
 1.78d:
@@ -22,8 +25,6 @@ Newest Additions
 - Logs added to some processes.
 1.78b:
 - vwp issue partially fixed, might come back to this.
-1.78:
-- flt opcode modified so that it can run freely in a script rather than alone.
 """
 
 import math
@@ -37,9 +38,11 @@ from random import randint as RI
 from random import choice as RC
 
 subx,suby=0,0
-constrFlag = ""
+constrFlag=""
 positions=[[],[]]
 logs,logIndex=[],0
+cycles=0
+rounds=0
 
 def _stop():
   stop=True
@@ -156,6 +159,8 @@ unary_ops = {
     #reciprocal
     "sqrt": (lambda a: round(Dec(a**Dec(0.5)))),
     "cbrt": (lambda a: round(Dec(a**Dec(1/3)))),
+    "sqtr": (lambda a: Dec(a**Dec(0.5))),
+    "cbtr": (lambda a: Dec(a**Dec(1/3))),
     "adx": (lambda a: a+subx),
     "ady": (lambda a: a+suby),
     "dcd": (lambda a: Dec(RC((f"{a}")))),
@@ -602,109 +607,28 @@ def op_tdl(s): #time delay
 
 
 def op_topc(s):
-  print("""
-  Ternary opcodes:
-  mdx
-  """)
+  a=""
+  for opc,cmds in tern_ops.items():
+    a+=(f"{opc} ")
+  print(a)
 
 def op_bopc(s):
-  print("""
-  Binary opcodes:
-  add
-  sub
-  mul
-  div
-  fdiv
-  gt
-  gte
-  lt
-  lte
-  eq
-  neq
-  pow
-  nrt
-  log
-  gpw
-  max
-  min
-  gin
-  """)
+  a=""
+  for opc,cmds in bin_ops.items():
+    a+=(f"{opc} ")
+  print(a)
 
 def op_uopc(s):
-  print("""
-  Unary opcodes:
-  sin
-  cos
-  tan
-  asn
-  acs
-  rup
-  rdw
-  inc
-  dec
-  neg
-  abs
-  eq0
-  neq0
-  rec
-  sqrt
-  cbrt
-  adx
-  ady
-  dcd
-  src
-  nsrc
-  msrc
-  fct
-  """)
+  a=""
+  for opc,cmds in unary_ops.items():
+    a+=(f"{opc} ")
+  print(a)
 
 def op_oopc(s):
-  print("""
-  Other opcodes:
-  eu
-  pi
-  !inp
-  dup
-  self
-  !out
-  dsr
-  fmc
-  flt
-  flc
-  cbs
-  cbe
-  jsr
-  pts
-  pt2
-  nop
-  brk
-  irp
-  swp
-  ncr
-  npr
-  !trace
-  inx
-  dex
-  stx
-  phx
-  otx
-  iny
-  dey
-  sty
-  phy
-  oty
-  sxy
-  mff
-  gff
-  outf
-  adp
-  vwp
-  gtp
-  arp
-  tdl
-  lgv
-  lgf
-  """)
+  a=""
+  for opc,cmds in ops.items():
+    a+=(f"{opc} ")
+  print(a)
 
 
 ops = {
