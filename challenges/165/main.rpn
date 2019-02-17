@@ -1,0 +1,1 @@
+:b jsr <-x ->c :b jsr <-x ->d :b jsr <-x <-c add <-d add
