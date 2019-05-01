@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.791b2:
+- fixed stupidity
 1.791b:
 - fix lol wtf
 1.791:
@@ -22,8 +24,6 @@ Newest Additions
 - Changed help commands to be more efficient.
 1.78d2:
 - Added help commands - topc, bopc, uopc, oopc.
-1.78d:
-- Added tdl (time delay).
 """
 
 import math
@@ -144,8 +144,8 @@ unary_ops = {
     "sin": (lambda a: round(Dec(math.sin(math.radians(a))), 10)),
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
     "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10) if a != 90 else Dec(0)),
-    "acs": (lambda a: (round(Dec(math.acos(math.radians(a))), 10))if 1>a>-1else 0),
-    "asn": (lambda a: (round(Dec(math.asin(math.radians(a))), 10))if 1>a>-1else 0),
+    "acs": (lambda a: (round(Dec(math.degrees(math.acos(a))), 10))if 1>a>-1else 0),
+    "asn": (lambda a: (round(Dec(math.degrees(math.asin(a))), 10))if 1>a>-1else 0),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
