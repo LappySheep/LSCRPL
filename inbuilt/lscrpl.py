@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.79"
+__version__ = "1.791"
 
 """
 Special Thanks
@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.791:
+- Patched issue with arc{trig} functions
 1.79:
 - Added sqtr, cbtr (square/cube root rounded), removed rounding for the original opcodes.
 - Changed help commands to be more efficient.
@@ -23,8 +25,6 @@ Newest Additions
 1.78c:
 - Added lgv and lgf (log view, log file).
 - Logs added to some processes.
-1.78b:
-- vwp issue partially fixed, might come back to this.
 """
 
 import math
