@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.791b:
+- fix lol wtf
 1.791:
 - Patched issue with arc{trig} functions
 1.79:
@@ -22,9 +24,6 @@ Newest Additions
 - Added help commands - topc, bopc, uopc, oopc.
 1.78d:
 - Added tdl (time delay).
-1.78c:
-- Added lgv and lgf (log view, log file).
-- Logs added to some processes.
 """
 
 import math
@@ -146,7 +145,7 @@ unary_ops = {
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
     "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10) if a != 90 else Dec(0)),
     "acs": (lambda a: (round(Dec(math.acos(math.radians(a))), 10))if 1>a>-1else 0),
-    "asn": (lambda a: (round(Dec(math.acos(math.radians(a))), 10))if 1>a>-1else 0),
+    "asn": (lambda a: (round(Dec(math.asin(math.radians(a))), 10))if 1>a>-1else 0),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
