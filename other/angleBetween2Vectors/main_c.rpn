@@ -1,0 +1,4 @@
+;code by Bax
+;version 1.791b
+!inp !inp !inp !inp !inp !inp ->u ->v ->w ->x ->y ->z
+<-u <-x mul <-v <-y mul <-w <-z mul add add <-u 2 pow <-v 2 pow <-w 2 pow add add sqtr <-x 2 pow <-y 2 pow <-z 2 pow add add sqtr mul div acs !out

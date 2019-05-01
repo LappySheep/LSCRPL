@@ -1,0 +1,12 @@
+;version 1.791b
+!inp !inp !inp ->u ->v ->w
+!inp !inp !inp ->x ->y ->z
+<-u <-x mul ->a
+<-v <-y mul ->b
+<-w <-z mul ->c
+<-a <-b <-c add add ->d
+<-u 2 pow <-v 2 pow <-w 2 pow add add sqtr ->e
+<-x 2 pow <-y 2 pow <-z 2 pow add add sqtr ->f
+<-e <-f mul ->g
+<-d <-g div ->h
+<-h acs !out
