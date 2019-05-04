@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.791"
+__version__ = "1.792/361"
 
 """
 Special Thanks
@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.792/361:
+- Nothing new, just change to version format to indicate Python compatibility.
 1.791b2:
 - fixed stupidity
 1.791b:
