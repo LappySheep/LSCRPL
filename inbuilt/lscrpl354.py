@@ -40,7 +40,6 @@ from random import choice as RC
 
 subx,suby=0,0
 constrFlag=""
-positions=[[],[]]
 logs,logIndex=[],0
 cycles=0
 rounds=0
@@ -117,7 +116,6 @@ bin_ops = {
     "mul": (lambda a,b: a*b),
     "div": (lambda a,b: a/b if b!=0 else Dec(0)),
     "fdiv": (lambda a,b: a//b if b!=0 else Dec(0)),
-    #floor division
     "mod": (lambda a,b: a%b if b!=0 else Dec(0)),
     "gt": (lambda a,b: Dec(a>b)),
     "gte": (lambda a,b: Dec(a>=b)),
@@ -126,11 +124,8 @@ bin_ops = {
     "eq": (lambda a,b: Dec(a==b)),
     "neq": (lambda a,b: Dec(a!=b)),
     "pow": (lambda a,b: a**b),
-    "nrt": (lambda a,b: a**(1/b)),
-    #n-th root
+    "nrt": (lambda a,b: a**(1/b)), #n-th root
     "log": (lambda a,b: round(Dec(math.log(a,b))), 10),
-    "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10),
-    # deprecated synonym
     "max": (lambda a,b: max(a,b)),
     "min": (lambda a,b: min(a,b)),
     "gin": (lambda a,b: Dec((str(a))[int(b)-1])),
@@ -207,14 +202,6 @@ def op_fmc(s): #create code (rpn) file, q to quit
   with open("{}.rpn".format(a),"w")as f:
     loop=True
     while loop==True:
-      b=input("<Code< ")
-      if b=="q":
-        loop=False
-        f.close()
-      else:
-        f.write("{}\n".format(b))
-        loop=True
-
 def op_dsr(s): #define string, can be multi-line
   a=input("<<FName< ")
   with open("{}.txt".format(a),"w")as f:
@@ -546,44 +533,6 @@ def op_trace(s): #basic stack tracing
       print("{}\nType: Unidentified".format(a))
       
 
-def op_adp(s): #add two positions (x,y)
-  global positions
-  b=pop_stack(s)
-  a=pop_stack(s)
-  positions[0].append(a)
-  positions[1].append(b)
-
-def op_vwp(s): #view two positions (x_n,y_n)
-  global positions
-  a=pop_stack(s)-1
-  try:
-    e=[row[int(a)] for row in positions]
-    print("{}, {}".format(e[0],e[1]))
-  except IndexError:
-    b=len(positions[0])
-    c="are"if b!=1else"is"
-    d="s"if b!=1else""
-    print("There {} only {} set{} of positions. {} set(s) of positions cannot be loaded.".format(c,b,d,a+1))
-
-def op_gtp(s): #get positions (x_n,y_n) and adds to stack
-  global positions
-  a=pop_stack(s)-1
-  b=[row[int(a)] for row in positions]
-  s.append(b[0])
-  s.append(b[1])
-
-def op_arp(s): #add positions (x_n,y_n) to (x_m,y_m)
-  global positions
-  b=pop_stack(s)-1
-  a=pop_stack(s)-1
-  c=[row[int(a)] for row in positions]
-  d=[row[int(b)] for row in positions]
-  for value in c:
-    e=c.index(value)
-    f,g=c[e-1]+d[e-1],c[e]+d[e]
-  s.append(f)
-  s.append(g)
-
 
 def op_lgv(s): #view logs
   global logs
@@ -640,7 +589,6 @@ ops = {
     "self": op_dup,
     "!out": op_out,
     "dsr": op_dsr,
-    "fmc": op_fmc,
     "flt": op_flt,
     "flc": op_flc,
     "cbs": op_cbs,
@@ -670,10 +618,6 @@ ops = {
     "cfv": op_cfv,
     "outf": op_outf,
     "!trace": op_trace,
-    "adp": op_adp,
-    "vwp": op_vwp,
-    "gtp": op_gtp,
-    "arp": op_arp,
     "lgv": op_lgv,
     "lgf": op_lgf,
     "tdl": op_tdl,

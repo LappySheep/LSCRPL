@@ -163,10 +163,10 @@ Other Operators:
 -- Define a function, stored in a file.
 
 - flt
--- Load a string, from a file.
+-- Print a string, from a file.
 
 - flc
--- Load code from a function, from a file.
+-- Trigger code from a function, from a file.
 
 - a b cbs
 -- If <a> is equal to 1, trigger function <b>.
@@ -255,24 +255,6 @@ Flag-related Opcodes:
 
 - outf
 -- Outputs the current flag.
-
-
-
-Position-related Opcodes:
-- a b adp
--- Appends <a> to the list of x positions and appends <b> to the list of y positions.
-
-- a vwp
--- Outputs the x,y positions of the <a>-th set of positions.
-
-- a gtp
--- Appends the x and y positions of the <a>-th set of positions to the stack. Note that the x position is pushed before the y position.
--- This means that the y position will be called first if the stack values are requested.
--- Negate this effect using swp.
-
-- a b arp
--- Takes the x,y positions of the <a>-th set and the <b>-th sets of positions, adds the two x positions together in to one, adds the two y positions together in to one, and returns the new x position and the new y position (in that order).
--- Negate this effect using swp. 
 
 
 
