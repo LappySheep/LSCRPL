@@ -152,7 +152,6 @@ unary_ops = {
     "eq0": (lambda a: Dec(a == 0)),
     "neq0": (lambda a: Dec(a != 0)),
     "rec": (lambda a: Dec(1/a)),
-    #reciprocal
     "sqrt": (lambda a: round(Dec(a**Dec(0.5)))),
     "cbrt": (lambda a: round(Dec(a**Dec(1/3)))),
     "sqtr": (lambda a: Dec(a**Dec(0.5))),
@@ -197,11 +196,6 @@ def op_out(s): #outputs + remove from stack
     a = pop_stack(s)
     print(str(a))
 
-def op_fmc(s): #create code (rpn) file, q to quit
-  a=input("<<FName< ")
-  with open("{}.rpn".format(a),"w")as f:
-    loop=True
-    while loop==True:
 def op_dsr(s): #define string, can be multi-line
   a=input("<<FName< ")
   with open("{}.txt".format(a),"w")as f:
