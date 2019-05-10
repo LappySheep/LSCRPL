@@ -1,3 +1,0 @@
-By randomdude999
-
--> Checks primes and outputs if prime or not
