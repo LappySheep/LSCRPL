@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.792/361"
+__version__ = "1.792b/361"
 
 """
 Special Thanks
@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.792b/361:
+- .rpn changed to .rps for QoL
 1.792/361:
 - Nothing new, just change to version format to indicate Python compatibility.
 1.791b2:
@@ -21,11 +23,6 @@ Newest Additions
 - fix lol wtf
 1.791:
 - Patched issue with arc{trig} functions
-1.79:
-- Added sqtr, cbtr (square/cube root rounded), removed rounding for the original opcodes.
-- Changed help commands to be more efficient.
-1.78d2:
-- Added help commands - topc, bopc, uopc, oopc.
 """
 
 import math
@@ -204,7 +201,7 @@ def op_out(s): #outputs + remove from stack
 
 def op_fmc(s): #create code (rpn) file, q to quit
   a=input("<<FName< ")
-  with open("{}.rpn".format(a),"w")as f:
+  with open("{}.rps".format(a),"w")as f:
     loop=True
     while loop==True:
       b=input("<Code< ")
@@ -254,7 +251,7 @@ def op_flc(s): #trigger code file
   #note - to run freely, use jsr
   a=input("<<FName< ")
   try:
-    with open("{}.rpn".format(a),"r")as f:
+    with open("{}.rps".format(a),"r")as f:
       b=f.readlines()
       for line in b:
         if line[0] == ";":continue
@@ -276,7 +273,7 @@ def op_cbs(s): #a b cbs - if a == 1, trigger a function
   if a == 1:
     if str(b)[0] == ":":
       try:
-        with open("{}.rpn".format(b[1:]),"r")as f:
+        with open("{}.rps".format(b[1:]),"r")as f:
           c=f.readlines()
           for line in c:
             if line[0] == ";":continue
@@ -304,7 +301,7 @@ def op_cbe(s): #trigger function else trigger another/none
   if a == 1:
     if str(b)[0] == ":":
       try:
-        with open("{}.rpn".format(b[1:]),"r")as f:
+        with open("{}.rps".format(b[1:]),"r")as f:
           g=f.readlines()
           for line in g:
             if line[0] == ";":continue
@@ -323,7 +320,7 @@ def op_cbe(s): #trigger function else trigger another/none
   elif a == 0:
     if str(c)[0] == ":":
       try:
-        with open("{}.rpn".format(c[1:]),"r")as f:
+        with open("{}.rps".format(c[1:]),"r")as f:
           h=f.readlines()
           for line in h:
             if line[0] == ";":continue
@@ -351,7 +348,7 @@ def op_jsr(s): #jump to subroutine (function)
   a = pop_stack(s)
   if str(a)[0] == ":":
     try:
-      with open("{}.rpn".format(a[1:]),"r")as f:
+      with open("{}.rps".format(a[1:]),"r")as f:
           b=f.readlines()
           for line in b:
             if line[0] == ";":continue
@@ -372,7 +369,7 @@ def op_pts(s): #if 1, print out the code of a function
   if a == 1:
     if str(b)[0] == ":":
       try:
-        with open("{}.rpn".format(b[1:]),"r")as f:
+        with open("{}.rps".format(b[1:]),"r")as f:
           c=f.read()
           print(f">> {c}")
       except FileNotFoundError:
@@ -390,14 +387,14 @@ def op_pt2(s): #if 1, print the code of func a or b, or none
   if a == 1:
     if str(b)[0] == ":":
       try:
-        with open("{}.rpn".format(b[1:]),"r")as f:
+        with open("{}.rps".format(b[1:]),"r")as f:
           g=f.read()
           print(f">> {g}")
       except FileNotFoundError:
         raise InvalidFuncName(b[1:])
   elif a == 0:
     try:
-      with open("{}.rpn".format(c[1:]),"r")as f:
+      with open("{}.rps".format(c[1:]),"r")as f:
         h=f.read()
         print(f">> {h}")
     except FileNotFoundError:
@@ -500,7 +497,7 @@ def op_npr(s): #n choose r * r!
 
 def op_mff(s): #make flag file
   inp = input("<Char+FName< ")
-  with open("{}.rpnf".format(inp[1:]),"w")as f:
+  with open("{}.rpsf".format(inp[1:]),"w")as f:
     f.write(inp[0])
     f.close()
 
@@ -508,7 +505,7 @@ def op_gff(s): #add flag file contents to flag variable
   global constrFlag
   inp = input("<FName< ")
   try: 
-    with open("{}.rpnf".format(inp),"r")as f:
+    with open("{}.rpsf".format(inp),"r")as f:
       char = f.read()
       constrFlag+=char
       f.close()
@@ -536,7 +533,7 @@ def op_trace(s): #basic stack tracing
   except TypeError:
     if a[0]==":":
       try:
-        with open("{}.rpn".format(a[1:]),"r")as f:
+        with open("{}.rps".format(a[1:]),"r")as f:
           b,d=[list(map(int,line.strip().split(' ')))for line in f],0
           for c in b:d+=len(c)
           print("{}\nType: Function, Exists\nItem Count:{}".format(a[1:],d))
@@ -782,7 +779,7 @@ def main():
         eval_cmd(cmd, variables)
 
 if __name__ == '__main__':
-  with open("brk.rpn","w")as f:
+  with open("brk.rps","w")as f:
     f.write("brk")
     f.close()
   main()
