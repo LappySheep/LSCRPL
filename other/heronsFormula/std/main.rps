@@ -1,0 +1,11 @@
+!inp !inp !inp ->a ->b ->c
+<-a <-b <-c add add ->s
+<-s 2 div ->s
+
+<-s <-a sub ->d
+<-s <-b sub ->e
+<-s <-c sub ->f
+
+<-d <-e <-f <-s mul mul mul ->m
+
+<-m sqtr
