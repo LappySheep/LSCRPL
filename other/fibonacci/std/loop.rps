@@ -1,0 +1,4 @@
+<-a <-b add ->a
+<-a !out
+1 tdl
+:loop2 jsr
