@@ -42,6 +42,7 @@ constrFlag=""
 positions=[[],[]]
 logs,logIndex=[],0
 cycles=0
+# global to allow tracking rounds in recursive functions properly
 rounds=0
 
 def _stop():
@@ -601,9 +602,10 @@ def op_lgf(s): #put logs in file
     f.close()
 
 def op_tdl(s): #time delay
+  global rounds
   a=pop_stack(s)
   time.sleep(a)
-
+  rounds += math.ceil(a)
 
 
 def op_topc(s):
@@ -680,7 +682,6 @@ ops = {
     "bopc": op_bopc,
     "uopc": op_uopc,
     "oopc": op_oopc,
-    
 }
 # merge tern_ops into ops
 for k, v in tern_ops.items():
@@ -691,6 +692,91 @@ for k, v in bin_ops.items():
 # merge unary_ops into ops
 for k, v in unary_ops.items():
     ops[k] = functools.partial(handle_unary_op, k)
+
+op_rounds = {
+    "mdx":6,
+    "add":4,
+    "sub":4,
+    "mul":4,
+    "div":4,
+    "fdiv":5,
+    "mod":5,
+    "gt":5,
+    "gte":5,
+    "lt":5,
+    "lte":5,
+    "eq":4,
+    "neq":4,
+    "pow":4,
+    "nrt":5,
+    "log":5,
+    "gpw":5,
+    "max":5,
+    "min":5,
+    "gin":4,
+    "sin":3,
+    "cos":3,
+    "tan":3,
+    "acs":3,
+    "asn":3,
+    "rup":3,
+    "rdw":3,
+    "inc":1,
+    "dec":1,
+    "neg":1,
+    "abs":1,
+    "eq0":3,
+    "neq0":3,
+    "rec":3,
+    "sqrt":4,
+    "cbrt":4,
+    "sqtr":5,
+    "cbtr":5,
+    "adx":4,
+    "ady":4,
+    "dcd":3,
+    "src":4,
+    "nsrc":4,
+    "msrc":4,
+    "fct":3,
+    "eu":1,
+    "pi":1,
+    "!inp":3,
+    "self":3,
+    "dup":3,
+    "!out":2,
+    "flt":6,
+    "cbs":7,
+    "cbe":11,
+    "jsr":5,
+    "pts":7,
+    "pt2":10,
+    "nop":2,
+    "brk":0,
+    "irp":2,
+    "swp":5,
+    "inx":2,
+    "dex":2,
+    "stx":2,
+    "phx":2,
+    "otx":2,
+    "iny":2,
+    "dey":2,
+    "sty":2,
+    "phy":2,
+    "oty":2,
+    "sxy":6,
+    "ncr":9,
+    "npr":8,
+    "cfv":1,
+    "outf":2,
+    "!trace":16,
+    "adp":4,
+    "vwp":6,
+    "gtp":5,
+    "arp":9,
+    "tdl":0, # it updates the round count manually
+}
 
 def split_input(inp):
     # TODO: maybe make it possible to use non-space separators? i.e. "2 2add" is valid
@@ -707,7 +793,7 @@ def is_integer(x):
     return True
 
 def eval_cmd(inp, variables):
-    global logIndex
+    global logIndex, rounds
     temp = f"""Process {logIndex}: ~{inp}~\nVariables: {variables}\n\n"""
     logs.append(temp)
     logIndex+=1
@@ -722,8 +808,13 @@ def eval_cmd(inp, variables):
         try:
             if is_integer(x):
                 stack.append(decimal.Decimal(x))
+                rounds += 1
             elif x in ops:
                 ops[x](stack) # the operator itself handles stack manipulation
+                if x in op_rounds:
+                    rounds += op_rounds[x]
+                elif debug_mode:
+                    print(f"Warning: operation {x} has unknown round count")
             elif len(x) == 3 and x[0:2] in ("->", "<-", "--"):
                 var_name = x[2]
                 if var_name not in string.ascii_letters:
@@ -731,6 +822,7 @@ def eval_cmd(inp, variables):
                     raise InvalidVarName(var_name)
                 if x[0:2] == "->":
                     variables[var_name] = pop_stack(stack)
+                    rounds += 2
                 elif x[0:2] == "<-":
                     try:
                         stack.append(variables[var_name])
@@ -738,6 +830,7 @@ def eval_cmd(inp, variables):
                     except KeyError:
                         logs.append(f"Process {logIndex} failed\n\n")
                         raise UndefinedVariable(var_name)
+                    rounds += 2
                 elif x[0:2] == "--":
                     try:
                         del variables[var_name]
@@ -745,10 +838,13 @@ def eval_cmd(inp, variables):
                     except KeyError:
                         logs.append(f"Process {logIndex} failed\n\n")
                         raise UndefinedVariable(var_name)
+                    rounds += 2
             elif x[0] == ":":
               stack.append(x)
+              rounds += 1
             elif x[0] == "@":
               stack.append(x)
+              rounds += 1
             else:
                 logs.append(f"Process {logIndex} failed\n\n")
                 raise InvalidOperation()
@@ -762,6 +858,7 @@ def eval_cmd(inp, variables):
             if stack:
                 print(" ".join(str(x) for x in stack))
             print(f"Token count: {len(tokens)}")
+            print(f"Round count: {rounds}")
             logs.append(f"Process {logIndex} - debug used\n\n")
     else:
         if stack:
@@ -770,7 +867,7 @@ def eval_cmd(inp, variables):
 
 
 def main():
-    global variables
+    global variables, rounds
     variables = {}
     while True:
         try:
@@ -778,6 +875,7 @@ def main():
         except (EOFError, KeyboardInterrupt):
             print()
             break
+        rounds = 0 # reset rounds counter - not in eval_cmd to prevent resetting in subroutine calls
         eval_cmd(cmd, variables)
 
 if __name__ == '__main__':
