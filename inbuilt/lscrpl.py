@@ -1,18 +1,19 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.793/361"
+__version__ = "1.8/361"
 
 """
 Special Thanks
 ~~~~~~~~~~~~~~
--> randomdude999 (changing the code to a more effective set)
---> (also help with a lot of the concepts)
+-> randomdude999 (major contributor)
 -> TheBloodlessMan (help with some of the concepts)
 
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.8/361:
+- dbg rounds checks
 1.793/361:
 - unnoticed strict lt/gt signs
 1.792b/361:
@@ -21,10 +22,6 @@ Newest Additions
 - Nothing new, just change to version format to indicate Python compatibility.
 1.791b2:
 - fixed stupidity
-1.791b:
-- fix lol wtf
-1.791:
-- Patched issue with arc{trig} functions
 """
 
 import math
@@ -39,7 +36,6 @@ from random import choice as RC
 
 subx,suby=0,0
 constrFlag=""
-positions=[[],[]]
 logs,logIndex=[],0
 cycles=0
 # global to allow tracking rounds in recursive functions properly
@@ -117,7 +113,6 @@ bin_ops = {
     "mul": (lambda a,b: a*b),
     "div": (lambda a,b: a/b if b!=0 else Dec(0)),
     "fdiv": (lambda a,b: a//b if b!=0 else Dec(0)),
-    #floor division
     "mod": (lambda a,b: a%b if b!=0 else Dec(0)),
     "gt": (lambda a,b: Dec(a>b)),
     "gte": (lambda a,b: Dec(a>=b)),
@@ -126,11 +121,8 @@ bin_ops = {
     "eq": (lambda a,b: Dec(a==b)),
     "neq": (lambda a,b: Dec(a!=b)),
     "pow": (lambda a,b: a**b),
-    "nrt": (lambda a,b: a**(1/b)),
-    #n-th root
+    "nrt": (lambda a,b: a**(1/b)), #n-th root
     "log": (lambda a,b: round(Dec(math.log(a,b))), 10),
-    "gpw": (lambda a,b: round(Dec(math.log(a,b))), 10),
-    # deprecated synonym
     "max": (lambda a,b: max(a,b)),
     "min": (lambda a,b: min(a,b)),
     "gin": (lambda a,b: Dec((str(a))[int(b)-1])),
@@ -157,7 +149,6 @@ unary_ops = {
     "eq0": (lambda a: Dec(a == 0)),
     "neq0": (lambda a: Dec(a != 0)),
     "rec": (lambda a: Dec(1/a)),
-    #reciprocal
     "sqrt": (lambda a: round(Dec(a**Dec(0.5)))),
     "cbrt": (lambda a: round(Dec(a**Dec(1/3)))),
     "sqtr": (lambda a: Dec(a**Dec(0.5))),
@@ -201,19 +192,6 @@ def op_dup(s): #double the top item on the stack
 def op_out(s): #outputs + remove from stack
     a = pop_stack(s)
     print(str(a))
-
-def op_fmc(s): #create code (rpn) file, q to quit
-  a=input("<<FName< ")
-  with open("{}.rps".format(a),"w")as f:
-    loop=True
-    while loop==True:
-      b=input("<Code< ")
-      if b=="q":
-        loop=False
-        f.close()
-      else:
-        f.write(f"{b}\n")
-        loop=True
 
 def op_dsr(s): #define string, can be multi-line
   a=input("<<FName< ")
@@ -544,45 +522,7 @@ def op_trace(s): #basic stack tracing
         print("{}\nType: Function, Does Not Exist\nItem Count: N/A".format(a[1:]))
     else:
       print("{}\nType: Unidentified".format(a))
-      
 
-def op_adp(s): #add two positions (x,y)
-  global positions
-  b=pop_stack(s)
-  a=pop_stack(s)
-  positions[0].append(a)
-  positions[1].append(b)
-
-def op_vwp(s): #view two positions (x_n,y_n)
-  global positions
-  a=pop_stack(s)-1
-  try:
-    e=[row[int(a)] for row in positions]
-    print(f"{e[0]}, {e[1]}")
-  except IndexError:
-    b=len(positions[0])
-    c="are"if b!=1else"is"
-    d="s"if b!=1else""
-    print(f"There {c} only {b} set{d} of positions. {a+1} set(s) of positions cannot be loaded.")
-
-def op_gtp(s): #get positions (x_n,y_n) and adds to stack
-  global positions
-  a=pop_stack(s)-1
-  b=[row[int(a)] for row in positions]
-  s.append(b[0])
-  s.append(b[1])
-
-def op_arp(s): #add positions (x_n,y_n) to (x_m,y_m)
-  global positions
-  b=pop_stack(s)-1
-  a=pop_stack(s)-1
-  c=[row[int(a)] for row in positions]
-  d=[row[int(b)] for row in positions]
-  for value in c:
-    e=c.index(value)
-    f,g=c[e-1]+d[e-1],c[e]+d[e]
-  s.append(f)
-  s.append(g)
 
 
 def op_lgv(s): #view logs
@@ -606,6 +546,7 @@ def op_tdl(s): #time delay
   a=pop_stack(s)
   time.sleep(a)
   rounds += math.ceil(a)
+
 
 
 def op_topc(s):
@@ -641,7 +582,6 @@ ops = {
     "self": op_dup,
     "!out": op_out,
     "dsr": op_dsr,
-    "fmc": op_fmc,
     "flt": op_flt,
     "flc": op_flc,
     "cbs": op_cbs,
@@ -671,10 +611,6 @@ ops = {
     "cfv": op_cfv,
     "outf": op_outf,
     "!trace": op_trace,
-    "adp": op_adp,
-    "vwp": op_vwp,
-    "gtp": op_gtp,
-    "arp": op_arp,
     "lgv": op_lgv,
     "lgf": op_lgf,
     "tdl": op_tdl,
@@ -683,6 +619,7 @@ ops = {
     "uopc": op_uopc,
     "oopc": op_oopc,
 }
+
 # merge tern_ops into ops
 for k, v in tern_ops.items():
     ops[k] = functools.partial(handle_ternop, k)
@@ -771,10 +708,6 @@ op_rounds = {
     "cfv":1,
     "outf":2,
     "!trace":16,
-    "adp":4,
-    "vwp":6,
-    "gtp":5,
-    "arp":9,
     "tdl":0, # it updates the round count manually
 }
 
