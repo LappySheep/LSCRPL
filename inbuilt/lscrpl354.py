@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.792b/354"
+__version__ = "1.793/354"
 
 """
 Special Thanks
@@ -13,6 +13,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.793/354:
+- unnoticed strict lt/gt signs
 1.792b/354:
 - .rpn changed to .rps for QoL
 1.792/354:
@@ -21,8 +23,6 @@ Newest Additions
 - fixed stupidity
 1.791b:
 - fix lol wtf
-1.791:
-- Patched issue with arc{trig} functions
 """
 
 import math
@@ -138,8 +138,8 @@ unary_ops = {
     "sin": (lambda a: round(Dec(math.sin(math.radians(a))), 10)),
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
     "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10) if a != 90 else Dec(0)),
-    "acs": (lambda a: (round(Dec(math.degrees(math.acos(a))), 10))if 1>a>-1else 0),
-    "asn": (lambda a: (round(Dec(math.degrees(math.asin(a))), 10))if 1>a>-1else 0),
+    "acs": (lambda a: (round(Dec(math.degrees(math.acos(a))), 10))if 1=>a=>-1else 0),
+    "asn": (lambda a: (round(Dec(math.degrees(math.asin(a))), 10))if 1=>a=>-1else 0),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
