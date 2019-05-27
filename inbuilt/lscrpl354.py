@@ -450,10 +450,7 @@ def op_oty(s):
 
 def op_sxy(s):
   global subx,suby
-  a,b=subx,suby
-  suby=b
-  subx=a
-  del a,b
+  subx,suby=suby,subx
 
 
 def op_ncr(s): #n choose r
