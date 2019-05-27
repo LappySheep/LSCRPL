@@ -1,7 +1,7 @@
 __author__ = ["randomdude999","LappySheep"]
 __copyright__ = "LSC"
 __license__ = "MIT"
-__version__ = "1.8/361"
+__version__ = "1.81/361"
 
 """
 Special Thanks
@@ -12,6 +12,8 @@ Special Thanks
 
 Newest Additions
 ~~~~~~~~~~~~~~~~
+1.81/361:
+- support multi-char variable names now
 1.8/361:
 - dbg rounds checks
 1.793/361:
@@ -20,8 +22,6 @@ Newest Additions
 - .rpn changed to .rps for QoL
 1.792/361:
 - Nothing new, just change to version format to indicate Python compatibility.
-1.791b2:
-- fixed stupidity
 """
 
 import math
@@ -745,9 +745,13 @@ def eval_cmd(inp, variables):
                     rounds += op_rounds[x]
                 elif debug_mode:
                     print(f"Warning: operation {x} has unknown round count")
-            elif len(x) == 3 and x[0:2] in ("->", "<-", "--"):
-                var_name = x[2]
-                if var_name not in string.ascii_letters:
+            elif x[0:2] in ("->", "<-", "--"):
+                var_name = x[2:]
+                var_check = 0
+                for letter in var_name:
+                  if letter not in string.ascii_letters:
+                    var_check += 1
+                if var_check:
                     logs.append(f"Process {logIndex} failed\n\n")
                     raise InvalidVarName(var_name)
                 if x[0:2] == "->":
