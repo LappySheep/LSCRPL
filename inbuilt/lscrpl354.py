@@ -138,8 +138,8 @@ unary_ops = {
     "sin": (lambda a: round(Dec(math.sin(math.radians(a))), 10)),
     "cos": (lambda a: round(Dec(math.cos(math.radians(a))), 10)),
     "tan": (lambda a: round(Dec(math.tan(math.radians(a))), 10) if a != 90 else Dec(0)),
-    "acs": (lambda a: (round(Dec(math.degrees(math.acos(a))), 10))if 1=>a=>-1else 0),
-    "asn": (lambda a: (round(Dec(math.degrees(math.asin(a))), 10))if 1=>a=>-1else 0),
+    "acs": (lambda a: (round(Dec(math.degrees(math.acos(a))), 10))if 1>=a>=-1else 0),
+    "asn": (lambda a: (round(Dec(math.degrees(math.asin(a))), 10))if 1>=a>=-1else 0),
     "rup": (lambda a: Dec(math.ceil(a))),
     "rdw": (lambda a: Dec(math.floor(a))),
     "inc": (lambda a: a+1),
@@ -747,7 +747,7 @@ def eval_cmd(inp, variables):
                 if x in op_rounds:
                     rounds += op_rounds[x]
                 elif debug_mode:
-                    print(f"Warning: operation {x} has unknown round count")
+                    print("Warning: operation {} has unknown round count".format(x))
             elif len(x) == 3 and x[0:2] in ("->", "<-", "--"):
                 var_name = x[2]
                 if var_name not in string.ascii_letters:
