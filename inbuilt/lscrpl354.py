@@ -726,7 +726,7 @@ def is_integer(x):
     return True
 
 def eval_cmd(inp, variables):
-    global logIndex
+    global logIndex, rounds
     temp = """Process {}: ~{}~\nVariables: {}\n\n""".format(logIndex,inp,variables)
     logs.append(temp)
     logIndex+=1
