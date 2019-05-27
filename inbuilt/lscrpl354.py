@@ -4,10 +4,11 @@ __license__ = "MIT"
 __version__ = "1.81b/354"
 
 """
-Special Thanks
+Credits
 ~~~~~~~~~~~~~~
 -> randomdude999 (major contributor)
 -> TheBloodlessMan (help with some of the concepts)
+-> woakman (efficiency fixes)
 
 
 Newest Additions
