@@ -1,27 +1,27 @@
 Ternary Operators
 - a b c mdx
--- Returns (<a>^<b>) mod <c>.
+-- Returns (<a>^<b>) mod <c>. Equivalent to { c a b pow mod }.
 
 
 
 Binary Operators
 - a b add
--- Returns <a>+<b>
+-- Returns <a> + <b>
 
 - a b sub
--- Returns <a>-<b>
+-- Returns <a> - <b>
 
 - a b mul
--- Returns <a>*<b>
+-- Returns <a> * <b>
 
 - a b div
--- Returns <a>/<b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
+-- Returns <a> / <b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
 
 - a b fdiv
--- Returns <a> rounded-down answer for <a>/<b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
+-- Returns <a> rounded-down answer for <a> / <b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
 
 - a b mod
--- Returns the remainder of the division <a>/<b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
+-- Returns the remainder of the division <a> / <b>, unless <b> is 0. If <b> is 0, 0 is returned instead.
 
 - a b gt
 -- Returns 1 if <a> > <b>, returns 0 if <a> !> <b>.
@@ -45,13 +45,10 @@ Binary Operators
 -- Returns <a> ^ <b>.
 
 - a b nrt
--- Returns the <b>-th root of <a> (<a> ^ (1/<b>)).
+-- Returns the <b>-th root of <a> (<a> ^ (1 / <b>)).
 
 - a b log
--- Returns the exponent given the base and the result
-
-- a b gpw
--- Returns the exponent given the base and the result [Note - deprecated opcode].
+-- Returns the exponent given the base and the result.
 
 - a b max
 -- Returns the largest of <a> and <b>.
@@ -108,10 +105,16 @@ Unary Operators:
 -- Returns the reciprocal of <a>.
 
 - a sqrt
--- Returns the square root of <a>.
+-- Returns the rounded result of square root of <a>.
 
 - a cbrt
--- Returns the cube root of <a>.
+-- Returns the rounded result of cube root of <a>.
+
+- a sqtr
+-- Returns the square root of <a> (not rounded).
+
+- a cbtr
+-- Returns the cube root of <a> (not rounded).
 
 - a adx
 -- Adds <a> to the [x] register.
@@ -150,7 +153,7 @@ Other Operators:
 -- Duplicates the current value on the stack.
 
 - self
--- Duplicated the current value on the stack. [Note - Deprecated opcode]
+-- Duplicates the current value on the stack. [Note - Deprecated opcode]
 
 - !out
 -- Outputs the most recent/current value on the stack. Note that the interpreter by default will return a value.
@@ -158,9 +161,6 @@ Other Operators:
 
 - dsr
 -- Define a string; stored in a file.
-
-- fmc
--- Define a function, stored in a file.
 
 - flt
 -- Print a string, from a file.
@@ -196,10 +196,10 @@ Other Operators:
 -- Swaps the top 2 values on the stack from (<a>,<b>) to (<b>,<a>).
 
 - a b ncr
--- Returns (<a>)C(<b>).
+-- Returns (<a>)C(<b>). Equivalent to { a fct a b sub fct b fct mul div }.
 
 - a b npr
--- Returns (<a>)P(<b>).
+-- Returns (<a>)P(<b>). Equivalent to { a fct a b sub fct div } .
 
 - a !trace
 -- Returns basic properties of <a>.
